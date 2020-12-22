@@ -65,7 +65,7 @@
                         <Image url="@../image/login/rightImage.png"/>
                     </image>
                 </ImageView>
-                <AnchorPane fx:id="anchoepane" layoutX="-2.0" layoutY="-2.0" prefHeight="700.0" prefWidth="1065.0">
+                <AnchorPane fx:id="anchorPane" layoutX="-2.0" layoutY="-2.0" prefHeight="700.0" prefWidth="1065.0">
                     <children>
                         <ImageView fx:id="lockImage" fitHeight="150.0" fitWidth="200.0" layoutX="503.0" layoutY="96.0"
                                    onMouseClicked="#LockFade" pickOnBounds="true" preserveRatio="true">
@@ -97,7 +97,7 @@
                                 <Font name="System Bold" size="18.0"/>
                             </font>
                         </PasswordField>
-                        <Label fx:id="PassWordLable" alignment="CENTER" layoutX="394.0" layoutY="338.0" opacity="0.76"
+                        <Label fx:id="PassWordLabel" alignment="CENTER" layoutX="394.0" layoutY="338.0" opacity="0.76"
                                prefHeight="38.0" prefWidth="109.0"
                                style="-fx-background-color: #87CEFA; -fx-background-radius: 30 30 30 30;" text="密码">
                             <font>
@@ -111,7 +111,7 @@
                                 <Font size="18.0"/>
                             </font>
                         </TextField>
-                        <Label fx:id="userNameLable" alignment="CENTER" layoutX="394.0" layoutY="290.0" opacity="0.76"
+                        <Label fx:id="userNameLabel" alignment="CENTER" layoutX="394.0" layoutY="290.0" opacity="0.76"
                                prefHeight="38.0" prefWidth="109.0"
                                style="-fx-background-color: #87CEFA; -fx-background-radius: 30 30 30 30;" text="用户名">
                             <font>

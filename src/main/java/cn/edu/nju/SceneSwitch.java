@@ -57,7 +57,7 @@ public class SceneSwitch
             e.printStackTrace();
             return;
         }
-        startScene = new Scene(root, 1280, 700);
+        startScene = new Scene(root, 1200, 700);
     }
 
     private void initConnectScene()
@@ -201,7 +201,6 @@ public class SceneSwitch
 
     public void changeToMapChooseScene()
     {
-
         stage.setScene(mapChooseScene);
         stage.centerOnScreen();
     }
