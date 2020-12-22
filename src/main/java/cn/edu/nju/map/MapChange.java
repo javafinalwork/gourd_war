@@ -40,7 +40,7 @@ public class MapChange
     public MapChange(SceneSwitch ss)
     {
         this.ss = ss;
-        pane1 = getPane(1280, 700);
+        pane1 = getPane(1200, 700);
         dropShadow = new DropShadow();
         dropShadow.setColor(Color.valueOf("#00E5EE"));
         dropShadow.setHeight(50);
@@ -51,7 +51,7 @@ public class MapChange
 
         AnchorPane.setTopAnchor(pane1, 0.0);
         AnchorPane.setLeftAnchor(pane1, 0.0);
-        this.scene = new Scene(root);
+        this.scene = new Scene(root, 1280, 700);
 //        primaryStage.setScene(scene);
 //        primaryStage.setWidth(1280);
 //        primaryStage.setHeight(700);
@@ -76,11 +76,10 @@ public class MapChange
         btn_right = new ImageView("/image/map_choose/right.png");
         btn_left.setPreserveRatio(true);
         btn_right.setPreserveRatio(true);
-        //Button btnSelect=new Button("hrllo");
         hb.getChildren().addAll(btn_left, selected, btn_right);
 
 
-        ImageView im1 = new ImageView("/image/battle.png");
+        ImageView im1 = new ImageView("/image/map_choose/battle.png");
         im1.setPreserveRatio(true);
         im1.setFitWidth(weight / 2);
         im1.setFitHeight(height / 2);
@@ -152,7 +151,7 @@ public class MapChange
 
         selected.setOnMouseClicked(event -> {
             System.out.println("这张图片被选择了");
-            ss.changeToServerScene();
+            ss.changeToSignupScene();
         });
 
         AnchorPane anchorPane1 = new AnchorPane();//布局
@@ -162,10 +161,13 @@ public class MapChange
 
         PerspectiveCamera camera = new PerspectiveCamera();
         bottomScene.setCamera(camera);
+        bottomScene.resize(1200,700);
+        bottomScene.setOpacity(0.5);
 
         StackPane stackPane1 = new StackPane();
         stackPane1.getChildren().add(new ImageView("image/map_choose/background.png"));
         stackPane1.getChildren().add(bottomScene);
+//        stackPane1.getChildren().add(anchorPane1);
         stackPane1.getChildren().add(hb);
 //        stackPane1.setStyle("-fx-background-image: url(" + "image/map_choose/background.png" + "); " +
 //                "-fx-background-repeat: no-repeat;" +

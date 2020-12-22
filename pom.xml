@@ -96,6 +96,7 @@
                     <include>**/image/flash_explode/*.png</include>
                     <include>**/image/soil_explode/*.png</include>
                     <include>**/image/water_explode/*.png</include>
+                    <include>**/image/login/*.png</include>
                     <include>**/image/finish/*.png</include>
                     <include>**/image/*.png</include>
                     <include>**/image/*.jpg</include>

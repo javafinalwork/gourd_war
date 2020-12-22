@@ -1,7 +1,6 @@
 package cn.edu.nju;
 
-import cn.edu.nju.map.Finish;
-import cn.edu.nju.map.MapChange;
+import cn.edu.nju.map.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -15,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 
 import javafx.scene.text.Text;
-import cn.edu.nju.map.StartController;
 
 import java.io.IOException;
 import java.net.*;
@@ -26,7 +24,9 @@ public class SceneSwitch
 {
     Stage stage;
     Scene startScene;
-    Scene mapChoose;
+    Scene mapChooseScene;
+    Scene loginScene;
+    Scene signupScene;
     Scene connectScene;
     Scene serverScene;
     Scene clientScene;
@@ -153,8 +153,8 @@ public class SceneSwitch
 
     private void initMapChooseScene()
     {
-//        mapChange = new MapChange(this);
-//        mapChoose = mapChange.getScene();
+        mapChange = new MapChange(this);
+        mapChooseScene = mapChange.getScene();
     }
 
     private void initFinishScene()
@@ -163,10 +163,46 @@ public class SceneSwitch
         finishScene = this.finish.getScene();
     }
 
+    private void initLoginScene()
+    {
+        Parent root;
+        try
+        {
+            LoginController lc = new LoginController(this);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/login.fxml"));
+            loader.setController(lc);
+            root = loader.load();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return;
+        }
+        loginScene = new Scene(root, 1280, 700);
+    }
+
+    private void initSignupScene()
+    {
+        Parent root;
+        try
+        {
+            SignUp signup = new SignUp(this);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/signup.fxml"));
+            loader.setController(signup);
+            root = loader.load();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return;
+        }
+        signupScene = new Scene(root, 1280, 700);
+    }
 
     public void changeToMapChooseScene()
     {
-        stage.setScene(mapChoose);
+
+        stage.setScene(mapChooseScene);
         stage.centerOnScreen();
     }
 
@@ -180,9 +216,22 @@ public class SceneSwitch
         stage.setScene(startScene);
     }
 
+    public void changeToLoginScene()
+    {
+        stage.setScene(loginScene);
+    }
+
+    public void changeToSignupScene()
+    {
+        stage.setScene(signupScene);
+    }
+
+
     public void init()
     {
         initStartScene();
+        initLoginScene();
+        initSignupScene();
         initMapChooseScene();
         initConnectScene();
         initServerScene();
