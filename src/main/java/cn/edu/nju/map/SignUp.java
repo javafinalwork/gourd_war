@@ -104,11 +104,7 @@ public class SignUp
     @FXML
     void SignIn(ActionEvent event) throws IOException
     {
-//        Parent root = FXMLLoader.load(getClass().getResource("/fxml/signup.fxml"));
-//        Node node = (Node) event.getSource();
-//        Stage stage = (Stage) node.getScene().getWindow();
-//        stage.setScene(new Scene(root));
-        ss.changeToSignupScene();
+        ss.changeToLoginScene();
     }
 
     @FXML

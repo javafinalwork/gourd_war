@@ -92,7 +92,7 @@ public class LoginController
 //        Node node = (Node) event.getSource();
 //        Stage stage = (Stage) node.getScene().getWindow();
 //        stage.setScene(new Scene(root));
-        ss.changeToLoginScene();
+        ss.changeToSignupScene();
     }
 
 

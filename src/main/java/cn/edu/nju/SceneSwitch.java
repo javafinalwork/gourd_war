@@ -242,9 +242,9 @@ public class SceneSwitch
     {
         init();
         stage.setTitle("葫芦娃大战妖精");
-        stage.setScene(startScene);
         stage.setWidth(WINDOW_WIDTH);
         stage.setHeight(WINDOW_HEIGHT);
+        stage.setScene(startScene);
         stage.getIcons().add(Constant.PROJECT_ICON);
         stage.show();
     }

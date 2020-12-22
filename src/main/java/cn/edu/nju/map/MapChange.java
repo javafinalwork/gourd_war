@@ -50,19 +50,12 @@ public class MapChange
         root = new AnchorPane();
         root.getChildren().addAll(pane1);
 
-
-
-       // SubScene bottomScene = new SubScene(pane1, 1280, 700, true, SceneAntialiasing.BALANCED);
-        //root.getChildren().add(bottomScene);
-
-
-
         AnchorPane.setTopAnchor(pane1, 0.0);
         AnchorPane.setLeftAnchor(pane1, 0.0);
 
         this.scene = new Scene(root);
- PerspectiveCamera camera = new PerspectiveCamera();
- scene.setCamera(camera);
+        PerspectiveCamera camera = new PerspectiveCamera();
+        scene.setCamera(camera);
 
     }
 
@@ -74,7 +67,6 @@ public class MapChange
 
     public Pane getPane(int weight, int height)
     {
-
         picz = 150;
         HBox hb = new HBox((weight - 64 * 2) / 2);
         hb.setAlignment(Pos.CENTER);
@@ -85,10 +77,9 @@ public class MapChange
         btn_right.setPreserveRatio(true);
         hb.getChildren().addAll(btn_left, selected, btn_right);
 
-
-        Image image1=new Image("/image/battle.png");
-        Image image2=new Image("/image/map_choose/battle.png");
-        Image image3=new Image("/image/map_choose/battle.png");
+        Image image1 = new Image("/image/battle.png");
+        Image image2 = new Image("/image/map_choose/battle.png");
+        Image image3 = new Image("/image/map_choose/battle.png");
 
         ImageView im1 = new ImageView("/image/battle.png");
         im1.setImage(image1);
@@ -109,18 +100,14 @@ public class MapChange
         im2.setTranslateZ(0);
         im3.setTranslateZ(picz);
 
-         AnchorPane anchorPane1 = new AnchorPane();//布局
-        anchorPane1.getChildren().addAll(im1, im3,im2);
+        AnchorPane anchorPane1 = new AnchorPane();//布局
+        anchorPane1.getChildren().addAll(im1, im3, im2);
 
 
         pic1 = 0;
         pic2 = (int) (weight / 2 - im2.getFitWidth() / 2);
         pic3 = (int) (weight - im2.getFitWidth());
         pic1y = (int) (hb.getHeight() + im1.getFitHeight() / 2);
-        //System.out.println(im1.getFitHeight());
-//        System.out.println(hb.getLayoutX());
-//        System.out.println(im2.getFitHeight());
-//        System.out.println(pic1y);
         im1.setTranslateX(pic1);
         im1.setTranslateY(pic1y);
 
@@ -130,7 +117,7 @@ public class MapChange
         im2.setTranslateX(pic2);
         im2.setTranslateY(pic1y);
         ArrayList<ImageView> imageList = new ArrayList<>();
-        ArrayList<Image> imageArrayList=new ArrayList<>();
+        ArrayList<Image> imageArrayList = new ArrayList<>();
 
 
         imageList.add(im1);
@@ -157,16 +144,10 @@ public class MapChange
                 imageList.add(tmpLeft);
                 imageList.add(tmpMiddle);
                 anchorPane1.getChildren().clear();
-                anchorPane1.getChildren().addAll(tmpRight,tmpMiddle,tmpLeft);
-               // anchorPane1.getChildren().remove(0);
-               // anchorPane1.getChildren().set(0,tmpRight);
-               // anchorPane1.getChildren().remove(1);
-               // anchorPane1.getChildren().set(1,tmpMiddle);
-               // anchorPane1.getChildren().remove(2);
-               // anchorPane1.getChildren().set(2,tmpLeft);
+                anchorPane1.getChildren().addAll(tmpRight, tmpMiddle, tmpLeft);
                 im1.setImage(tmpRight.getImage());
                 im2.setImage(tmpMiddle.getImage());
-               im3.setImage(tmpLeft.getImage());
+                im3.setImage(tmpLeft.getImage());
             }
         });
 
@@ -186,43 +167,26 @@ public class MapChange
                 imageList.add(tmpRight);
                 imageList.add(tmpLeft);
                 anchorPane1.getChildren().clear();
-                anchorPane1.getChildren().addAll(tmpLeft,tmpMiddle,tmpRight);
-               // anchorPane1.getChildren().set(0,tmpRight);
-                //anchorPane1.getChildren().set(1,tmpMiddle);
-                //anchorPane1.getChildren().set(2,tmpLeft);
-               im1.setImage(tmpLeft.getImage());
-               im2.setImage(tmpMiddle.getImage());
+                anchorPane1.getChildren().addAll(tmpLeft, tmpMiddle, tmpRight);
+                im1.setImage(tmpLeft.getImage());
+                im2.setImage(tmpMiddle.getImage());
                 im3.setImage(tmpRight.getImage());
             }
         });
 
         selected.setOnMouseClicked(event -> {
             System.out.println("这张图片被选择了");
-            ss.changeToServerScene();
+            ss.changeToSignupScene();
         });
 
-       //-- AnchorPane anchorPane1 = new AnchorPane();//布局
-        //--anchorPane1.getChildren().addAll(im1, im2,im3);
-
-        //SubScene bottomScene = new SubScene(anchorPane1, weight, height, true, SceneAntialiasing.BALANCED);//put pic
-
-        //PerspectiveCamera camera = new PerspectiveCamera();
-       // bottomScene.setCamera(camera);
-
-
-       // PerspectiveCamera camera = new PerspectiveCamera();
-       // bottomScene.setCamera(camera);
 
         AnchorPane stackPane1 = new AnchorPane();
-      // String path=getClass().getClassLoader().getResource("D:\\abc\\huluwa_final\\src\\main\\resources\\image\\map_choose\\background.png").getPath();
-     // stackPane1.getChildren().add(new ImageView("image/map_choose/background.png"));
-        stackPane1.getChildren().addAll(anchorPane1,hb);
+        stackPane1.getChildren().addAll(anchorPane1, hb);
         stackPane1.setPrefHeight(700);
         stackPane1.setPrefWidth(1200);
-        //stackPane1.getChildren().add(hb);
         stackPane1.setStyle("-fx-background-image: url(" + "/image/map_choose/background.png" + "); " +
                 "-fx-background-repeat: no-repeat;" +
-             " -fx-background-size: cover;");
+                " -fx-background-size: cover;");
 
         return stackPane1;
     }
@@ -399,18 +363,5 @@ public class MapChange
         parallelTransition.getChildren().addAll(sequentialTransition, translate);
         parallelTransition.setNode(image);
         parallelTransition.play();
-    }
-
-
-    public Pane selsectButton(int weight, int height)
-    {
-        Button btn = new Button();
-        AnchorPane anchorPane1 = new AnchorPane();//布局
-        anchorPane1.getChildren().addAll(btn);
-        SubScene bottomScene = new SubScene(anchorPane1, weight, height, true, SceneAntialiasing.BALANCED);//put pic
-        StackPane stackPane1 = new StackPane();
-        stackPane1.getChildren().addAll(bottomScene);
-        stackPane1.setStyle("-fx-background-color:#00FF00");
-        return stackPane1;
     }
 }
