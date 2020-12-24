@@ -36,7 +36,7 @@ public class LoginController
         Image image2 = new Image("image/login/lock.png");
         lockImage = new ImageView(image2);
         ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(3));
-        scaleTransition.setNode(Title);
+        scaleTransition.setNode(titleText);
         scaleTransition.setToX(1.5);
         scaleTransition.setToY(1.5);
         scaleTransition.setCycleCount(Timeline.INDEFINITE);
@@ -46,22 +46,22 @@ public class LoginController
 
 
     @FXML
-    private Text Title;
+    private Text titleText;
 
     @FXML
-    private Button RegisterButton;
+    private Button registerButton;
 
     @FXML
-    private Button ExitButton;
+    private Button exitButton;
 
     @FXML
     private AnchorPane anchorPane;
 
     @FXML
-    private Button LoginButton;
+    private Button loginButton;
 
     @FXML
-    private Text LoginMessage;
+    private Text loginMessage;
 
     @FXML
     private Label userNameLabel;
@@ -70,7 +70,7 @@ public class LoginController
     private TextField userName;
 
     @FXML
-    private Label PassWordLabel;
+    private Label passWordLabel;
 
     @FXML
     private PasswordField password;
@@ -84,51 +84,70 @@ public class LoginController
     @FXML
     private ImageView lockImage;
 
+
     @FXML
-    void SignUp(ActionEvent event) throws IOException
+    private Button serverButton;
+
+    @FXML
+    private Button clientButton;
+
+    @FXML
+    private Button touristButton;
+
+    boolean isServerClicked = false;
+    boolean isClientClicked = false;
+    boolean isJourneyClicked = false;
+
+
+    @FXML
+    void signUpAction(ActionEvent event) throws IOException
     {
-        //Sing();
-//        Parent root = FXMLLoader.load(getClass().getResource("/fxml/signup.fxml"));
-//        Node node = (Node) event.getSource();
-//        Stage stage = (Stage) node.getScene().getWindow();
-//        stage.setScene(new Scene(root));
+//        Sing();
         ss.changeToSignupScene();
     }
 
 
-    public void ExitButtonAction(ActionEvent event)
+    public void exitButtonAction(ActionEvent event)
     {
-        Stage stage = (Stage) ExitButton.getScene().getWindow();
+        Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
     }
 
-    public void RegisterAction(ActionEvent event)
+    public void registerAction(ActionEvent event)
     {
         //Parent root= FXMLLoader.load(getClass().getResourceAsStream("test.fxml"));
     }
 
 
-    public void LoginMessage()
+    public void loginAction()
     {
         //Sing();
-        if (userName.getText().isEmpty() == false && password.getText().isEmpty() == false)
+        if(!isServerClicked&&!isClientClicked)
         {
-            LoginMessage.setText("You are trying to Login.");
-            if (validLogin())
+            loginMessage.setText("Please choose server or client!");
+            return;
+        }
+        if(isJourneyClicked)
+        {
+            ss.changeToConnectScene(isServerClicked);
+            return;
+        }
+        if (!userName.getText().isEmpty() && !password.getText().isEmpty())
+        {
+            loginMessage.setText("You are trying to Login.");
+            if (isValidLogin())
             {
-                ss.changeToServerScene();
+                ss.changeToConnectScene(isServerClicked);
             }
         }
         else
         {
-            LoginMessage.setText("Please enter your information.");
+            loginMessage.setText("Please enter your information.");
         }
-
     }
 
-    public void LockFade()
+    public void lockFade()
     {
-        System.out.println("hello here");
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(3.0));
         fadeTransition.setCycleCount(2);
         fadeTransition.setFromValue(1.0);
@@ -142,19 +161,14 @@ public class LoginController
         parallelTransition.setNode(lockImage);
         parallelTransition.getChildren().addAll(rotateTransition, fadeTransition);
         parallelTransition.play();
-
-        //fadeTransition.play();
     }
 
-    public boolean validLogin()
+    public boolean isValidLogin()
     {
-        System.out.println("hello ha ");
         Database connection = new Database();
         Connection connection1 = connection.getDbconnection();
-        System.out.println("hello haa ");
         String InputCheck = "select count(1) from user_password where name =\"" + userName.getText() +
                 "\"and password=\"" + password.getText() + "\"";
-        System.out.println(InputCheck);
         try
         {
             Statement statement = connection1.createStatement();
@@ -163,12 +177,12 @@ public class LoginController
             {
                 if (resultSet.getInt(1) == 1)
                 {
-                    LoginMessage.setText("Congratulations.");
+                    loginMessage.setText("Congratulations.");
                     return true;
                 }
                 else
                 {
-                    LoginMessage.setText("Sorry.");
+                    loginMessage.setText("Sorry.");
                 }
             }
 
@@ -178,6 +192,53 @@ public class LoginController
             E.printStackTrace();
         }
         return false;
+    }
+
+    @FXML
+    void serverAction(ActionEvent event)
+    {
+        if (isServerClicked)
+        {
+            serverButton.setStyle("-fx-background-color: #ADD8E6");
+        }
+        else
+        {
+            isClientClicked = false;
+            serverButton.setStyle("-fx-background-color:#FF0000");
+            clientButton.setStyle("-fx-background-color: #ADD8E6");
+        }
+        isServerClicked = !isServerClicked;
+        //修改颜色
+    }
+
+    @FXML
+    void touristAction(ActionEvent event)
+    {
+        if (isJourneyClicked)
+        {
+            touristButton.setStyle("-fx-background-color: #ADD8E6");
+        }
+        else
+        {
+            touristButton.setStyle("-fx-background-color:#FF0000");
+        }
+        isJourneyClicked = !isJourneyClicked;
+    }
+
+    @FXML
+    void clientAction(ActionEvent event)
+    {
+        if (isClientClicked)
+        {
+            clientButton.setStyle("-fx-background-color: #ADD8E6");
+        }
+        else
+        {
+            isServerClicked = false;
+            clientButton.setStyle("-fx-background-color:#FF0000");
+            serverButton.setStyle("-fx-background-color: #ADD8E6");
+        }
+        isClientClicked = !isClientClicked;
     }
 
 //    void Sing()

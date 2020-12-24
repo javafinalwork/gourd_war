@@ -1,4 +1,4 @@
-package cn.edu.nju;
+package cn.edu.nju.battle;
 
 import java.io.*;
 import java.text.SimpleDateFormat;

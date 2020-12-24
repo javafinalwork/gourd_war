@@ -1,22 +1,18 @@
-package cn.edu.nju;
+package cn.edu.nju.component;
 
+import cn.edu.nju.constant.Constant;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
-enum Direction
-{
-    UP, DOWN, LEFT, RIGHT;
-}
 
 public class Creature
 {
     enum Status
     {
-        FIGHTING, MOVING, DEAD;
+        FIGHTING, MOVING, DEAD
     }
 
-    private boolean isGood;
+    private final boolean isGood;
     private static final int LIFE_REC_WIDTH = 80;
     private static final int LIFE_REC_HEIGHT = 5;
     private Direction direction;// 判断方向，用于选择形象
@@ -24,10 +20,10 @@ public class Creature
     private int gridId;
     private final int totalHp;
     private int hitPoint;// 生命值
-    private int attack;// 攻击力
-    private int attackRange;
-    private int speed;
-    private BulletType bulletType;
+    private final int attack;// 攻击力
+    private final int attackRange;
+    private final int speed;
+    private final BulletType bulletType;
     private ImageView imgView;
     private Rectangle rLife;
     private Rectangle rBorder;
@@ -38,7 +34,7 @@ public class Creature
     double dstY;
 
 
-    Creature(String name, int gridId, Direction direction,
+    public Creature(String name, int gridId, Direction direction,
              int hitPoint, int attack, int speed, int attackRange,
              BulletType bulletType, String imgUri, boolean isGood)
     {

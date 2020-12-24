@@ -1,9 +1,10 @@
-package cn.edu.nju;
+package cn.edu.nju.constant;
 
 import javafx.scene.image.Image;
 
 public class Constant
 {
+    public final static int portNumber = 59091;
     public final static Image BATTLE_IMG = new Image("/image/battle.png");
     public final static String CREATURE_DATA_URI = "src/main/resources/data/creature.json";
     public final static Image PROJECT_ICON = new Image("/image/gourd_icon.png");

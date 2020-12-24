@@ -1,4 +1,4 @@
-package cn.edu.nju;
+package cn.edu.nju.component;
 
 import javafx.geometry.Point2D;
 
@@ -162,7 +162,7 @@ public class GridMap
         return neighborGrids;
     }
 
-    Direction judgeDirection(int id, int dstId)
+    public Direction judgeDirection(int id, int dstId)
     {
         int dis = dstId - id;
         if (dis > 0 && dis < line)

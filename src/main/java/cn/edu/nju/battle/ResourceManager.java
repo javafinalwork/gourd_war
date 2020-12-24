@@ -1,4 +1,4 @@
-package cn.edu.nju;
+package cn.edu.nju.battle;
 
 public class ResourceManager
 {
@@ -23,7 +23,7 @@ public class ResourceManager
             int dstId = msg.getDstId();
             if (msg.isFromServer())
             {
-                if (monsters[dstId] == false)
+                if (!monsters[dstId])
                 {
                     calabashBrothers[srcId] = false;
                     calabashBrothers[dstId] = true;
@@ -32,7 +32,7 @@ public class ResourceManager
             }
             else
             {
-                if (calabashBrothers[dstId] == false)
+                if (!calabashBrothers[dstId])
                 {
                     monsters[srcId] = false;
                     monsters[dstId] = true;
@@ -42,5 +42,4 @@ public class ResourceManager
         }
         return false;
     }
-
 }

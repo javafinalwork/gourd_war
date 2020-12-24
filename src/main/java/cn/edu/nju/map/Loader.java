@@ -1,6 +1,5 @@
 package cn.edu.nju.map;
 
-
 import javafx.application.Preloader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 
-public class loader extends Preloader
+public class Loader extends Preloader
 {
     private Stage preloaderStage;
     private Scene scene;
@@ -29,9 +28,8 @@ public class loader extends Preloader
     public void init() throws Exception
     {
         super.init();
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/activation.fxml"));
         scene = new Scene(root, 1280, 700);
-
     }
 
     @Override
@@ -40,8 +38,7 @@ public class loader extends Preloader
         super.handleApplicationNotification(info);
         if (info instanceof ProgressNotification)
         {
-            //System.out.println(((ProgressNotification)info).getProgress());
-            ActivationController.lable.setText("Loading" + (((ProgressNotification) info).getProgress()) * 100 + "%");
+            ActivationController.label.setText("Loading" + (((ProgressNotification) info).getProgress()) * 100 + "%");
             ActivationController.progress.setProgress(((ProgressNotification) info).getProgress());
             num++;
             if (num == 6)
@@ -49,8 +46,7 @@ public class loader extends Preloader
                 num = 1;
             }
             String name = String.valueOf(num);
-            name = "/sample/" + name + ".png";
-            // System.out.println(name);
+            name = "image/activation/gourd" + name + ".png";
             Image image = new Image(name, true);
             ActivationController.imageView.setImage(image);
         }
@@ -64,7 +60,6 @@ public class loader extends Preloader
         switch (type)
         {
             case BEFORE_START:
-                System.out.println("before");
                 preloaderStage.hide();
                 break;
         }

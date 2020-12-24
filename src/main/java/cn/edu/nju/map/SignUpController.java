@@ -3,10 +3,6 @@ package cn.edu.nju.map;
 import cn.edu.nju.SceneSwitch;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -15,26 +11,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
-import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ResourceBundle;
 
-public class SignUp
+public class SignUpController
 {
     SceneSwitch ss;
 
-    public SignUp(SceneSwitch ss)
+    public SignUpController(SceneSwitch ss)
     {
         this.ss = ss;
         Image image = new Image("image/login/leftImage.png");
@@ -51,13 +40,13 @@ public class SignUp
     private ImageView leftImage;
 
     @FXML
-    private Text Title;
+    private Text titleText;
 
     @FXML
-    private Button RegisterButton;
+    private Button registerButton;
 
     @FXML
-    private Button ExitButton;
+    private Button exitButton;
 
     @FXML
     private ImageView rightImage;
@@ -69,16 +58,16 @@ public class SignUp
     private ImageView lockImage;
 
     @FXML
-    private Text LoginMessage;
+    private Text loginMessage;
 
     @FXML
-    private Button LoginButton;
+    private Button loginButton;
 
     @FXML
     private PasswordField password;
 
     @FXML
-    private Label PassWordLabel;
+    private Label passWordLabel;
 
     @FXML
     private TextField userName;
@@ -87,28 +76,28 @@ public class SignUp
     private Label userNameLabel;
 
     @FXML
-    void ExitButtonAction(ActionEvent event)
+    void exitButtonAction(ActionEvent event)
     {
         System.out.println("exist");
-        Stage stage = (Stage) ExitButton.getScene().getWindow();
+        Stage stage = (Stage) exitButton.getScene().getWindow();
 //        Sing();
         stage.close();
     }
 
     @FXML
-    void LockFade(MouseEvent event)
+    void lockFade(MouseEvent event)
     {
 
     }
 
     @FXML
-    void SignIn(ActionEvent event) throws IOException
+    void signInAction(ActionEvent event) throws IOException
     {
         ss.changeToLoginScene();
     }
 
     @FXML
-    void LoginMessage(ActionEvent event)
+    void loginAction(ActionEvent event)
     {
 //        Sing();
         System.out.println("loginMessage");
@@ -135,7 +124,7 @@ public class SignUp
     }
 
     @FXML
-    void RegisterButtonClicked(MouseEvent event)
+    void registerButtonClickedAction(MouseEvent event)
     {
         Database database = new Database();
         String user = userName.getText();

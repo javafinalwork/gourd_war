@@ -7,6 +7,7 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
@@ -68,14 +69,17 @@ public class MapChange
     public Pane getPane(int weight, int height)
     {
         picz = 150;
-        HBox hb = new HBox((weight - 64 * 2) / 2);
+        HBox hb = new HBox((weight - 72 * 2) / 2);
         hb.setAlignment(Pos.CENTER);
         btn_left = new ImageView("/image/map_choose/left.png");
         selected = new ImageView("/image/map_choose/selectMapButton.png");
+        Button buttonSelect=new Button();
+        buttonSelect.setGraphic(selected);
+        buttonSelect.setStyle("-fx-background-color:transparent");
         btn_right = new ImageView("/image/map_choose/right.png");
         btn_left.setPreserveRatio(true);
         btn_right.setPreserveRatio(true);
-        hb.getChildren().addAll(btn_left, selected, btn_right);
+        hb.getChildren().addAll(btn_left, buttonSelect, btn_right);
 
         Image image1 = new Image("/image/battle.png");
         Image image2 = new Image("/image/map_choose/battle.png");
@@ -128,6 +132,15 @@ public class MapChange
         imageArrayList.add(image2);
         imageArrayList.add(image3);
 
+        buttonSelect.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("这张图片被选择了");
+                //ss.changeToSignupScene();
+                ss.changeToLoginScene();
+            }
+        });
+
         btn_right.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
             @Override
@@ -176,11 +189,14 @@ public class MapChange
 
         selected.setOnMouseClicked(event -> {
             System.out.println("这张图片被选择了");
-            ss.changeToSignupScene();
+            //ss.changeToSignupScene();
+            ss.changeToLoginScene();
         });
 
 
         AnchorPane stackPane1 = new AnchorPane();
+        hb.setLayoutX(0);
+        hb.setLayoutY(300);
         stackPane1.getChildren().addAll(anchorPane1, hb);
         stackPane1.setPrefHeight(700);
         stackPane1.setPrefWidth(1200);

@@ -53,11 +53,11 @@ public class Finish
     public void start() throws Exception
     {
         AnchorPane stackPane = new AnchorPane();
-        Image imageFinish = new Image("/image/finish/finishBackground.png");
+        Image imageFinish = new Image("image/finish/finishBackground.png");
         ImageView imageViewFinish = new ImageView();
         imageViewFinish.setImage(imageFinish);
 
-        Image imageGameOver = new Image("/image/finish/gameOver.png");
+        Image imageGameOver = new Image("image/finish/gameOver.png");
         ImageView imageView = new ImageView();
         imageView.setImage(imageGameOver);
 
@@ -136,7 +136,7 @@ public class Finish
             public void handle(MouseEvent event)
             {
                 //TODO
-                Sing();
+//                Sing();
             }
         });
 
@@ -171,7 +171,7 @@ public class Finish
             public void handle(MouseEvent event)
             {
                 //TODO
-                Sing();
+//                Sing();
             }
         });
 
@@ -223,7 +223,7 @@ public class Finish
             public void handle(ActionEvent event)
             {
                 System.out.println("RESATART GAME");
-                Sing();
+//                Sing();
             }
         });
 
@@ -245,7 +245,7 @@ public class Finish
         ArrayList<ImageView> imageList = new ArrayList<ImageView>();
         for (int i = 0; i < 50; i++)
         {
-            ImageView im = new ImageView("/image/gourd_icon.png");
+            ImageView im = new ImageView("image/finish/gourd.png");
             im.setPreserveRatio(true);
             int x = random.nextInt(1200);
             int y = 10;
@@ -299,15 +299,14 @@ public class Finish
     }
 
 
-    void Sing()
-    {
-        Media media;
-        MediaPlayer mediaPlayer;
-
-        String s1 = Paths.get("music2.mp3").toUri().toString();
-        media = new Media(s1);
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
-        System.out.println("we are playing");
-    }
+//    void Sing()
+//    {
+//        Media media;
+//        MediaPlayer mediaPlayer;
+//
+//
+//        mediaPlayer = new MediaPlayer(media = new Media(""););
+//        mediaPlayer.play();
+//        System.out.println("we are playing");
+//    }
 }

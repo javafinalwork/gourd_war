@@ -8,7 +8,7 @@
 
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0"
-            prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+            prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" >
     <children>
         <ImageView fitHeight="700.0" fitWidth="1333.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -21,7 +21,7 @@
                 <Image url="@../image/start/game_title.png"/>
             </image>
         </ImageView>
-        <ImageView fx:id="SoundControlButton" fitHeight="75.0" fitWidth="85.0" layoutX="6.0" layoutY="611.0"
+        <ImageView fx:id="soundControlButton" fitHeight="75.0" fitWidth="85.0" layoutX="6.0" layoutY="611.0"
                    onMouseClicked="#soundOff" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../image/start/sound.png"/>
@@ -33,7 +33,7 @@
                 <Font name="System Bold" size="27.0"/>
             </font>
         </Button>
-        <Button fx:id="ExitButton" layoutX="556.0" layoutY="574.0" mnemonicParsing="false" onAction="#exitAction"
+        <Button fx:id="exitButton" layoutX="556.0" layoutY="574.0" mnemonicParsing="false" onAction="#exitAction"
                 prefHeight="75.0" prefWidth="165.0" stylesheets="@../css/start.css" text="退出">
             <font>
                 <Font name="System Bold" size="27.0"/>

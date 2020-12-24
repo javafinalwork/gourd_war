@@ -75,7 +75,7 @@
     {
       "name": "蝎子精",
       "gridId": 13,
-      "hitPoint": 5000,
+      "hitPoint": 50,
       "attack": 10,
       "speed": 10,
       "range": 1,

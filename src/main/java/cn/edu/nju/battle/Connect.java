@@ -1,5 +1,8 @@
-package cn.edu.nju;
+package cn.edu.nju.battle;
 
+import cn.edu.nju.SceneSwitch;
+import cn.edu.nju.constant.Constant;
+import cn.edu.nju.map.Finish;
 import javafx.application.Platform;
 
 import java.io.EOFException;
@@ -44,7 +47,6 @@ class DataServer extends BaseConnector
 {
     ObjectOutputStream serverOos;
     ObjectInputStream clientOis;
-    ;
 
     DataServer(SceneSwitch ss, Battlefield battlefield)
     {
@@ -65,7 +67,7 @@ class DataServer extends BaseConnector
 
     private void startServer() throws IOException, ClassNotFoundException
     {
-        ServerSocket server = new ServerSocket(59091);
+        ServerSocket server = new ServerSocket(Constant.portNumber);
         Socket clientSocket = server.accept();
 
         clientOis = new ObjectInputStream(clientSocket.getInputStream());
@@ -74,17 +76,22 @@ class DataServer extends BaseConnector
         Platform.runLater(() -> ss.finishConnect());
 
         BattleMsg msg = null;
+
         while ((msg = (BattleMsg) clientOis.readObject()) != null)
         {
             if (msg.msgType == MsgType.FINISH_MSG)
             {
+                final boolean isCalabashWin = msg.isCalabashWin();
+                final boolean isMonsterWin = msg.isMonsterWin();
+
+                clientSocket.shutdownInput();
+                clientSocket.shutdownOutput();
+                clientSocket.close();
+                Platform.runLater(() -> ss.changeToFinishScene(isCalabashWin, isMonsterWin));
                 break;
             }
             battlefield.parseMsg(msg);
         }
-        clientSocket.shutdownInput();
-        clientSocket.shutdownOutput();
-        clientSocket.close();
     }
 
     @Override
@@ -93,22 +100,19 @@ class DataServer extends BaseConnector
         serverOos.writeObject(msg);
 //        serverOos.flush();
     }
-
 }
 
 
 class DataClient extends BaseConnector
 {
     String host;
-    int port;
     ObjectOutputStream clientOos;
     ObjectInputStream serverOis;
 
-    DataClient(String host, int port, SceneSwitch ss, Battlefield battlefield)
+    DataClient(String host, SceneSwitch ss, Battlefield battlefield)
     {
         super(ss, battlefield);
         this.host = host;
-        this.port = port;
     }
 
 
@@ -126,30 +130,34 @@ class DataClient extends BaseConnector
 
     private void startClient() throws IOException, ClassNotFoundException
     {
-        Socket echoSocket = new Socket(host, 59091);
+        Socket echoSocket = new Socket(host, Constant.portNumber);
 
         clientOos = new ObjectOutputStream(echoSocket.getOutputStream());
         serverOis = new ObjectInputStream(echoSocket.getInputStream());
         Platform.runLater(() -> ss.finishConnect());
         BattleMsg msg;
+
         try
         {
             while ((msg = (BattleMsg) serverOis.readObject()) != null)
             {
                 if (msg.msgType == MsgType.FINISH_MSG)
                 {
+                    final boolean isCalabashWin = msg.isCalabashWin();
+                    final boolean isMonsterWin = msg.isMonsterWin();
+                    echoSocket.shutdownInput();
+                    //echo msg
+                    write(new FinishMsg(isCalabashWin, isMonsterWin, false, 0));
+                    echoSocket.shutdownOutput();
+                    echoSocket.close();
+                    Platform.runLater(() -> ss.changeToFinishScene(isCalabashWin, isMonsterWin));
                     break;
                 }
                 battlefield.parseMsg(msg);
             }
         } catch (EOFException ignored)
-        {}
-        echoSocket.shutdownInput();
-        //echo msg
-        write(new BattleMsg(MsgType.FINISH_MSG, false, 0));
-        echoSocket.shutdownOutput();
-        echoSocket.close();
-
+        {
+        }
     }
 
     @Override

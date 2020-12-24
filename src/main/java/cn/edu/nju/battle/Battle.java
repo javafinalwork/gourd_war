@@ -1,5 +1,10 @@
-package cn.edu.nju;
+package cn.edu.nju.battle;
 
+import cn.edu.nju.constant.Constant;
+import cn.edu.nju.SceneSwitch;
+import cn.edu.nju.component.BulletType;
+import cn.edu.nju.component.Creature;
+import cn.edu.nju.component.Direction;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -25,7 +30,7 @@ public class Battle
     Recorder recorder;
     Timeline timeLine;
 
-    Battle()
+    public Battle()
     {
         initBattle();
     }
@@ -33,7 +38,7 @@ public class Battle
     /**
      * server构造函数
      */
-    Battle(SceneSwitch ss)
+    public Battle(SceneSwitch ss)
     {
         this.isServer = true;
         recorder = new Recorder();
@@ -44,12 +49,12 @@ public class Battle
     /**
      * client构造函数
      */
-    Battle(String host, int port, SceneSwitch ss)
+    public Battle(String host,  SceneSwitch ss)
     {
         this.isServer = false;
         recorder = new Recorder();
         initBattle();
-        connector = new DataClient(host, port, ss, battlefield);
+        connector = new DataClient(host,  ss, battlefield);
     }
 
     /**
@@ -138,7 +143,7 @@ public class Battle
         {
             if (isServer)
             {
-                writeMsg(new BattleMsg(MsgType.FINISH_MSG, true, clock));
+                writeMsg(new FinishMsg(isCalabashWin, isMonsterWin,  true, clock));
                 timeLine.stop();
             }
         }
@@ -214,20 +219,18 @@ public class Battle
         writeMsg(msg);
     }
 
-    public void playBack(String fileUri)
+    public void playBack(File file)
     {
         LinkedList<BattleMsg> msgList = new LinkedList<>();
         try
         {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("2020_12_16_16_51_56"));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
             Object obj;
             while ((obj = ois.readObject()) != null)
             {
                 BattleMsg msg = (BattleMsg) obj;
                 msgList.add(msg);
             }
-
-            System.out.println(msgList.size());
             ois.close();
         } catch (EOFException ignored)
         {
@@ -253,4 +256,10 @@ public class Battle
         timeLine.setCycleCount(Timeline.INDEFINITE);
         timeLine.play();
     }
+
+    public void finishGame()
+    {
+
+    }
+
 }

@@ -1,13 +1,8 @@
-package cn.edu.nju;
+package cn.edu.nju.component;
 
+import cn.edu.nju.constant.Constant;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-
-enum BulletType
-{
-    NORMAL, WATER, FIRE, DARK, FLASH, SOIL;
-}
 
 
 public class Bullet
@@ -32,11 +27,11 @@ public class Bullet
 
     enum Status
     {
-        FLYING, EXPLODING, DEAD;
+        FLYING, EXPLODING, DEAD
     }
 
 
-    Bullet(BulletType bulletType, Direction direction, boolean isServer,
+    public Bullet(BulletType bulletType, Direction direction, boolean isServer,
            int damage, double x, double y, double animationX, double animationY, double range)
     {
         this.isServer = isServer;

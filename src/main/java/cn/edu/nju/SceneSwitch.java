@@ -1,5 +1,7 @@
 package cn.edu.nju;
 
+import cn.edu.nju.battle.Battle;
+import cn.edu.nju.constant.Constant;
 import cn.edu.nju.map.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -15,6 +18,7 @@ import javafx.scene.control.Label;
 
 import javafx.scene.text.Text;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
@@ -60,27 +64,6 @@ public class SceneSwitch
         startScene = new Scene(root, 1200, 700);
     }
 
-    private void initConnectScene()
-    {
-        Pane pane = new Pane();
-        Image img1 = new Image("/image/temp1.jpg");
-        pane.getChildren().add(new ImageView(img1));
-        Button clientBtn = new Button("Client");
-        clientBtn.relocate(300, 100);
-        Button serverBtn = new Button("Server");
-        serverBtn.relocate(300, 200);
-        Button backBtn = new Button("返回");
-        clientBtn.setOnAction(e -> stage.setScene(clientScene));
-        serverBtn.setOnAction(e -> {
-            stage.setScene(serverScene);
-            battle = new Battle(this);
-//            battle.startConnection();
-            finishConnect();
-        });
-        backBtn.setOnAction(e -> stage.setScene(startScene));
-        pane.getChildren().addAll(clientBtn, serverBtn, backBtn);
-        connectScene = new Scene(pane, WINDOW_WIDTH, WINDOW_HEIGHT);
-    }
 
     public void finishConnect()
     {
@@ -143,8 +126,7 @@ public class SceneSwitch
         pane.getChildren().addAll(new Label("port"), textPort);
         Button bt = new Button("connect");
         bt.setOnAction(e -> {
-            battle = new Battle(textHost.getText(),
-                    Integer.parseInt(textPort.getText()), this);
+            battle = new Battle(textHost.getText(), this);
             battle.startConnection();
         });
         pane.getChildren().add(bt);
@@ -186,7 +168,7 @@ public class SceneSwitch
         Parent root;
         try
         {
-            SignUp signup = new SignUp(this);
+            SignUpController signup = new SignUpController(this);
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/signup.fxml"));
             loader.setController(signup);
@@ -205,9 +187,20 @@ public class SceneSwitch
         stage.centerOnScreen();
     }
 
-    public void changeToServerScene()
+    public void changeToConnectScene(boolean isServerClicked)
     {
-        stage.setScene(serverScene);
+        if (isServerClicked)
+        {
+            stage.setScene(serverScene);
+            battle = new Battle(this);
+            battle.startConnection();
+//            finishConnect();
+        }
+        else
+        {
+            stage.setScene(clientScene);
+        }
+
     }
 
     public void changeToStartScene()
@@ -225,6 +218,29 @@ public class SceneSwitch
         stage.setScene(signupScene);
     }
 
+    public void changeToFinishScene(boolean isGourdWin, boolean isMonsterWin)
+    {
+        stage.setScene(finishScene);
+    }
+
+    public void exitGame()
+    {
+        stage.close();
+    }
+
+    public void openRecordFile()
+    {
+        final FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file != null)
+        {
+            System.out.println("choose file");
+            battle = new Battle();
+            stage.setScene(battle.getScene());
+            battle.playBack(file);
+        }
+    }
+
 
     public void init()
     {
@@ -232,7 +248,6 @@ public class SceneSwitch
         initLoginScene();
         initSignupScene();
         initMapChooseScene();
-        initConnectScene();
         initServerScene();
         initClientScene();
         initFinishScene();

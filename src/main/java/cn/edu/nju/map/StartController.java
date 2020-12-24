@@ -5,22 +5,24 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import cn.edu.nju.SceneSwitch;
+
+import java.io.File;
 
 
 public class StartController
 {
-    Stage stage;
     SceneSwitch ss;
     @FXML
-    private ImageView SoundControlButton;
+    private ImageView soundControlButton;
 
     @FXML
     private Button startButton;
 
     @FXML
-    private Button ExitButton;
+    private Button exitButton;
 
     @FXML
     private Button replayButton;
@@ -31,6 +33,7 @@ public class StartController
     @FXML
     void exitAction(ActionEvent event)
     {
+        ss.exitGame();
     }
 
     public StartController(SceneSwitch ss)
@@ -53,7 +56,7 @@ public class StartController
     @FXML
     void playRecord(ActionEvent event)
     {
-
+        ss.openRecordFile();
     }
 
     @FXML
@@ -61,5 +64,4 @@ public class StartController
     {
 
     }
-
 }

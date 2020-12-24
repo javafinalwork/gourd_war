@@ -1,5 +1,10 @@
-package cn.edu.nju;
+package cn.edu.nju.battle;
 
+import cn.edu.nju.constant.Constant;
+import cn.edu.nju.component.Bullet;
+import cn.edu.nju.component.Creature;
+import cn.edu.nju.component.Direction;
+import cn.edu.nju.component.GridMap;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
@@ -42,11 +47,11 @@ public class Battlefield
         {
             if (msg.isFromServer())
             {
-                moveCreature(msg.getSrcId(), msg.getDstId(), calabashBrothers, monsters);
+                moveCreature(msg.getSrcId(), msg.getDstId(), calabashBrothers);
             }
             else
             {
-                moveCreature(msg.getSrcId(), msg.getDstId(), monsters, calabashBrothers);
+                moveCreature(msg.getSrcId(), msg.getDstId(), monsters);
             }
         }
         else if (msg.msgType == MsgType.DAMAGE_MSG)
@@ -80,11 +85,11 @@ public class Battlefield
             }
             if (msg.isFromServer())
             {
-                moveCreature(msg.getSrcId(), msg.getDstId(), calabashBrothers, monsters);
+                moveCreature(msg.getSrcId(), msg.getDstId(), calabashBrothers);
             }
             else
             {
-                moveCreature(msg.getSrcId(), msg.getDstId(), monsters, calabashBrothers);
+                moveCreature(msg.getSrcId(), msg.getDstId(), monsters);
             }
         }
         else if (msg.msgType == MsgType.DAMAGE_MSG)
@@ -105,7 +110,7 @@ public class Battlefield
         }
     }
 
-    private void moveCreature(int id, int dstId, Creature[] creatures, Creature[] enemies)
+    private void moveCreature(int id, int dstId, Creature[] creatures)
     {
         Creature creature = creatures[id];
         Point2D p = gridMap.gridIdToCreaturePos(dstId);
@@ -144,9 +149,7 @@ public class Battlefield
         Bullet bullet = new Bullet(cre.getBulletType(), direction, isFromServer,
                 cre.getAttack(), p.getX(), p.getY(), pc.getX(), pc.getY(), dis);
         bullets.add(bullet);
-        Platform.runLater(() -> {
-            pane.getChildren().add(bullet.getImgView());
-        });
+        Platform.runLater(() -> pane.getChildren().add(bullet.getImgView()));
     }
 
 

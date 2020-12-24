@@ -1,4 +1,4 @@
-package cn.edu.nju;
+package cn.edu.nju.battle;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 enum MsgType
 {
-    MOVE_MSG, DAMAGE_MSG, BULLET_MSG, FINISH_MSG;
+    MOVE_MSG, DAMAGE_MSG, BULLET_MSG, FINISH_MSG
 }
 
 /**
@@ -38,7 +38,6 @@ class BattleMsg implements Serializable
         return isServer;
     }
 
-
     public int getDstId()
     {
         return -1;
@@ -58,6 +57,17 @@ class BattleMsg implements Serializable
     {
         return this.clock;
     }
+
+    public boolean isCalabashWin()
+    {
+        return false;
+    }
+
+    public boolean isMonsterWin()
+    {
+        return false;
+    }
+
 
     @Override
     public String toString()
@@ -161,3 +171,27 @@ class BulletMsg extends BattleMsg
     }
 }
 
+class FinishMsg extends BattleMsg
+{
+    boolean isCalabashWin;
+    boolean isMonsterWin;
+
+    FinishMsg(boolean isCalabashWin, boolean isMonsterWin, boolean isServer, long clock)
+    {
+        super(MsgType.FINISH_MSG, isServer, clock);
+        this.isCalabashWin = isCalabashWin;
+        this.isMonsterWin = isMonsterWin;
+    }
+
+    @Override
+    public boolean isCalabashWin()
+    {
+        return isCalabashWin;
+    }
+
+    @Override
+    public boolean isMonsterWin()
+    {
+        return isMonsterWin;
+    }
+}

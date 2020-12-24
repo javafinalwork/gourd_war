@@ -1,4 +1,5 @@
 package cn.edu.nju.map;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -10,15 +11,16 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ActivationController implements Initializable {
+public class ActivationController implements Initializable
+{
 
     @FXML
     private Line progressBar;
 
     @FXML
-    private Label progresslable;
+    private Label progressLabel;
 
-    public static Label lable;
+    public static Label label;
     @FXML
     private ProgressBar progressbar;
     @FXML
@@ -29,14 +31,16 @@ public class ActivationController implements Initializable {
 
     public static ImageView imageView;
 
-    public static Text textFild;
+    public static Text textField;
 
     public static ProgressBar progress;
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        lable=progresslable;
-        progress=progressbar;
-        imageView=Image;
-        textFild=Text;
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        label = progressLabel;
+        progress = progressbar;
+        imageView = Image;
+        textField = Text;
     }
 }

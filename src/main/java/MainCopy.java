@@ -1,5 +1,4 @@
-package cn.edu.nju;
-
+import cn.edu.nju.SceneSwitch;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
