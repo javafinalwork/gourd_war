@@ -10,27 +10,27 @@ public class Recorder
 
     Recorder()
     {
-//        String name = generateFileName();
-//
-//        try
-//        {
-//            oos = new ObjectOutputStream(new FileOutputStream(name));
-//        } catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
+        String name = generateFileName();
+
+        try
+        {
+            oos = new ObjectOutputStream(new FileOutputStream(name));
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
 
     public void writeToFile(BattleMsg msg)
     {
-//        try
-//        {
-//            oos.writeObject(msg);
-//        } catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
+        try
+        {
+            oos.writeObject(msg);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -44,5 +44,4 @@ public class Recorder
         System.out.println(sdf.format(date));
         return sdf.format(date);
     }
-
 }

@@ -136,8 +136,7 @@ public class MapChange
             @Override
             public void handle(MouseEvent event) {
                 System.out.println("这张图片被选择了");
-                //ss.changeToSignupScene();
-                ss.changeToLoginScene();
+                ss.changeToServerWaitingScene();
             }
         });
 

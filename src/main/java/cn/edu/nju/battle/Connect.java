@@ -2,7 +2,6 @@ package cn.edu.nju.battle;
 
 import cn.edu.nju.SceneSwitch;
 import cn.edu.nju.constant.Constant;
-import cn.edu.nju.map.Finish;
 import javafx.application.Platform;
 
 import java.io.EOFException;

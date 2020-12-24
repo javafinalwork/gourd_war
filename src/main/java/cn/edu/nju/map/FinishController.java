@@ -27,12 +27,12 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
-public class Finish
+public class FinishController
 {
     private SceneSwitch ss;
     private Scene scene;
 
-    public Finish(SceneSwitch ss)
+    public FinishController(SceneSwitch ss)
     {
         this.ss = ss;
         try
@@ -53,13 +53,11 @@ public class Finish
     public void start() throws Exception
     {
         AnchorPane stackPane = new AnchorPane();
-        Image imageFinish = new Image("image/finish/finishBackground.png");
-        ImageView imageViewFinish = new ImageView();
-        imageViewFinish.setImage(imageFinish);
-
-        Image imageGameOver = new Image("image/finish/gameOver.png");
-        ImageView imageView = new ImageView();
-        imageView.setImage(imageGameOver);
+        ImageView imageViewFinish = new ImageView("image/finish/finishBackground.png");
+        imageViewFinish.setFitWidth(1280);
+        imageViewFinish.setFitHeight(700);
+        stackPane.getChildren().add(imageViewFinish);
+        ImageView imageView = new ImageView("image/finish/gameOver.png");
 
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setFromY(imageView.getLayoutY());
@@ -289,6 +287,7 @@ public class Finish
                 parallelTransition.play();
             }
         });
+
         stackPane.getChildren().addAll(grid);
 
         AnchorPane.setTopAnchor(grid, 50.0);

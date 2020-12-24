@@ -248,6 +248,7 @@ public class Battle
                         BattleMsg msg = msgList.removeFirst();
                         battlefield.parseMsgOnPlayBack(msg);
                     }
+                    battlefield.updateBulletCollisionOnPlayBack();
                     updateCreature();
                     updateBullet();
                     detectGameStatus();
@@ -256,10 +257,4 @@ public class Battle
         timeLine.setCycleCount(Timeline.INDEFINITE);
         timeLine.play();
     }
-
-    public void finishGame()
-    {
-
-    }
-
 }

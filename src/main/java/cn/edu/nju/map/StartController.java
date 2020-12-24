@@ -50,7 +50,7 @@ public class StartController
     @FXML
     void startGame(ActionEvent event)
     {
-        ss.changeToMapChooseScene();
+        ss.changeToLoginScene();
     }
 
     @FXML

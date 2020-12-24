@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -81,8 +82,8 @@ public class Battlefield
                         battle.sendBack(msg);
                     }
                 }
-                recorder.writeToFile(msg);
             }
+            recorder.writeToFile(msg);
             if (msg.isFromServer())
             {
                 moveCreature(msg.getSrcId(), msg.getDstId(), calabashBrothers);
@@ -94,18 +95,12 @@ public class Battlefield
         }
         else if (msg.msgType == MsgType.DAMAGE_MSG)
         {
-            if (isServer)
-            {
-                recorder.writeToFile(msg);
-            }
+            recorder.writeToFile(msg);
             attackCreature(msg.getName(), msg.getDamage());
         }
         else if (msg.msgType == MsgType.BULLET_MSG)
         {
-            if (isServer)
-            {
-                recorder.writeToFile(msg);
-            }
+            recorder.writeToFile(msg);
             generateBullet(msg.getSrcId(), msg.getDstId(), msg.isFromServer());
         }
     }
@@ -145,7 +140,7 @@ public class Battlefield
         Direction direction = gridMap.judgeDirection(id, dstId);
         double dis = gridMap.getBulletRange(direction, cre.getAttackRange());
         Point2D p = gridMap.getBulletPos(id, dstId);
-        Point2D pc=gridMap.gridIdToCreaturePos(dstId);
+        Point2D pc = gridMap.gridIdToCreaturePos(dstId);
         Bullet bullet = new Bullet(cre.getBulletType(), direction, isFromServer,
                 cre.getAttack(), p.getX(), p.getY(), pc.getX(), pc.getY(), dis);
         bullets.add(bullet);
@@ -293,7 +288,6 @@ public class Battlefield
         ArrayList<Bullet> tempList = new ArrayList<>();
         for (Bullet bullet : bullets)
         {
-//            System.out.print(bullet.originX);
             bullet.update();
             if (bullet.isDead())
             {
@@ -305,8 +299,35 @@ public class Battlefield
         {
             bullets.remove(bullet);
         }
-//        System.out.println();
     }
+
+    public void updateBulletCollisionOnPlayBack()
+    {
+        for (Bullet bullet : bullets)
+        {
+            Creature[] creatures;
+            if (bullet.isFromServer())
+            {
+                creatures = monsters;
+            }
+            else
+            {
+                creatures = calabashBrothers;
+            }
+            for (Creature cre : creatures)
+            {
+                if (cre != null && !cre.isDied())
+                {
+                    if (!bullet.isUsed() && cre.getGridId() == gridMap.posToGridId(bullet.getX(), bullet.getY()))
+                    {
+                        Point2D p = gridMap.gridIdToCreaturePos(cre.getGridId());
+                        bullet.setCollision(p.getX(), p.getY());
+                    }
+                }
+            }
+        }
+    }
+
 
     public ArrayList<BattleMsg> bulletCollisionEvent(long clock)
     {
@@ -341,7 +362,7 @@ public class Battlefield
             {
                 if (!bullet.isUsed() && cre.getGridId() == gridMap.posToGridId(bullet.getX(), bullet.getY()))
                 {
-                    Point2D p=gridMap.gridIdToCreaturePos(cre.getGridId());
+                    Point2D p = gridMap.gridIdToCreaturePos(cre.getGridId());
                     bullet.setCollision(p.getX(), p.getY());
                     if (bullet.isFromServer() == isServer)
                     {

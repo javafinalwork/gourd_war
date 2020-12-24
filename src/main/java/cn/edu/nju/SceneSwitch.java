@@ -12,8 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 
 import javafx.scene.text.Text;
@@ -31,13 +29,13 @@ public class SceneSwitch
     Scene mapChooseScene;
     Scene loginScene;
     Scene signupScene;
-    Scene connectScene;
+    Scene serverWaitingScene;
     Scene serverScene;
     Scene clientScene;
     Scene finishScene;
     Battle battle;
     MapChange mapChange;
-    Finish finish;
+    FinishController finishController;
     final int WINDOW_WIDTH = 1280;
     final int WINDOW_HEIGHT = 700;
 
@@ -141,8 +139,8 @@ public class SceneSwitch
 
     private void initFinishScene()
     {
-        this.finish = new Finish(this);
-        finishScene = this.finish.getScene();
+        this.finishController = new FinishController(this);
+        finishScene = this.finishController.getScene();
     }
 
     private void initLoginScene()
@@ -178,8 +176,35 @@ public class SceneSwitch
             e.printStackTrace();
             return;
         }
-        signupScene = new Scene(root, 1280, 700);
+        signupScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
+
+    private void initServerWaitingScene()
+    {
+
+        InetAddress addr;
+        String s;
+        addr = getLANAddressOnWindows();
+        if (addr == null)
+        {
+            try
+            {
+                addr = InetAddress.getLocalHost();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                return;
+            }
+            s = addr.getHostAddress();
+        }
+        else
+        {
+            s = addr.getHostAddress();
+        }
+        ServerWaitingController swc = new ServerWaitingController(s);
+        serverWaitingScene = swc.getScene();
+    }
+
 
     public void changeToMapChooseScene()
     {
@@ -191,10 +216,8 @@ public class SceneSwitch
     {
         if (isServerClicked)
         {
-            stage.setScene(serverScene);
-            battle = new Battle(this);
-            battle.startConnection();
-//            finishConnect();
+            stage.setScene(mapChooseScene);
+
         }
         else
         {
@@ -223,6 +246,15 @@ public class SceneSwitch
         stage.setScene(finishScene);
     }
 
+    public void changeToServerWaitingScene()
+    {
+        stage.setScene(serverWaitingScene);
+        battle = new Battle(this);
+        battle.startConnection();
+//            finishConnect();
+    }
+
+
     public void exitGame()
     {
         stage.close();
@@ -248,6 +280,7 @@ public class SceneSwitch
         initLoginScene();
         initSignupScene();
         initMapChooseScene();
+        initServerWaitingScene();
         initServerScene();
         initClientScene();
         initFinishScene();
@@ -259,7 +292,7 @@ public class SceneSwitch
         stage.setTitle("葫芦娃大战妖精");
         stage.setWidth(WINDOW_WIDTH);
         stage.setHeight(WINDOW_HEIGHT);
-        stage.setScene(startScene);
+        stage.setScene(finishScene);
         stage.getIcons().add(Constant.PROJECT_ICON);
         stage.show();
     }
