@@ -21,6 +21,19 @@ public class Recorder
         }
     }
 
+    Recorder(String filename)
+    {
+        try
+        {
+            oos = new ObjectOutputStream(new FileOutputStream(filename));
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
     public void writeToFile(BattleMsg msg)
     {

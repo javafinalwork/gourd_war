@@ -48,7 +48,7 @@ public class Creature
         this.attackRange = attackRange;
         this.bulletType = bulletType;
         this.isGood = isGood;
-        imgView = new ImageView(imgUri);
+        this.imgView = new ImageView(imgUri);
 
         rBorder = new Rectangle(0, 0, LIFE_REC_WIDTH, LIFE_REC_HEIGHT);
         rBorder.xProperty().bind(imgView.xProperty().add(20));

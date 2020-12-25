@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="cn.edu.nju.battle.TestBattle" time="0.017" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="cn.edu.nju.battle.TestReadData" time="0.012" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="14.0.2+12-46"/>
@@ -60,6 +60,5 @@
     <property name="sun.stdout.encoding" value="ms936"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="cn.edu.nju.battle.TestBattle" name="testJsonParse" time="0.016"/>
-  <testcase classname="cn.edu.nju.battle.TestBattle" name="testLockResources" time="0.001"/>
+  <testcase classname="cn.edu.nju.battle.TestReadData" name="testJsonParse" time="0.012"/>
 </testsuite>
