@@ -35,5 +35,4 @@ public class ServerWaitingController
     {
         return this.scene;
     }
-
 }

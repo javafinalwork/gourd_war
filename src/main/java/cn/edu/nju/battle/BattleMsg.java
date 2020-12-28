@@ -18,7 +18,7 @@ class BattleMsg implements Serializable
     public static final long serialVersionUID = 12345;
     public final MsgType msgType;
     protected boolean isServer;
-    long clock = 0;
+    long clock;
 
     BattleMsg(MsgType msgType, boolean isServer, long clock)
     {

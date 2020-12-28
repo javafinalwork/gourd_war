@@ -96,7 +96,7 @@ public class FinishController
         grid.setHgap(10);
         grid.setVgap(20);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        Button restartBtn = new Button("重新开始");
+        Button restartBtn = new Button("返回");
         Button playbackBtn = new Button("回放游戏");
         Button exitBtn = new Button("退出游戏");
 
@@ -203,8 +203,7 @@ public class FinishController
             @Override
             public void handle(MouseEvent event)
             {
-                //TODO
-//                Sing();
+                ss.exitGame();
             }
         });
 

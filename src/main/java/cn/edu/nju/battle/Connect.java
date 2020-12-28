@@ -34,11 +34,6 @@ class BaseConnector implements Runnable
     {
 
     }
-
-    public void close()
-    {
-    }
-
 }
 
 
@@ -104,14 +99,14 @@ class DataServer extends BaseConnector
 
 class DataClient extends BaseConnector
 {
-    String host;
+    String ipAddr;
     ObjectOutputStream clientOos;
     ObjectInputStream serverOis;
 
-    DataClient(String host, SceneSwitch ss, Battlefield battlefield)
+    DataClient(String ipAddr, SceneSwitch ss, Battlefield battlefield)
     {
         super(ss, battlefield);
-        this.host = host;
+        this.ipAddr = ipAddr;
     }
 
 
@@ -129,7 +124,7 @@ class DataClient extends BaseConnector
 
     private void startClient() throws IOException, ClassNotFoundException
     {
-        Socket echoSocket = new Socket(host, Constant.portNumber);
+        Socket echoSocket = new Socket(ipAddr, Constant.portNumber);
 
         clientOos = new ObjectOutputStream(echoSocket.getOutputStream());
         serverOis = new ObjectInputStream(echoSocket.getInputStream());

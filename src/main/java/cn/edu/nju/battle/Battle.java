@@ -38,7 +38,7 @@ public class Battle
     }
 
 
-    public Battle(SceneSwitch ss, boolean isServer, String host)
+    public Battle(SceneSwitch ss, boolean isServer, String ipAddr)
     {
         this.isServer = isServer;
         this.sceneSwitch = ss;
@@ -50,7 +50,7 @@ public class Battle
         }
         else
         {
-            connector = new DataClient(host, ss, battlefield);
+            connector = new DataClient(ipAddr, ss, battlefield);
         }
     }
 

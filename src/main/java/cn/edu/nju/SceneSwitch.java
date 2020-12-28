@@ -8,13 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
-import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,18 +99,21 @@ public class SceneSwitch
 
     private void initClientScene()
     {
-        FlowPane pane = new FlowPane();
-        TextField textHost = new TextField("127.0.0.1");
-        TextField textPort = new TextField("1");
-        pane.getChildren().addAll(new Label("host"), textHost);
-        pane.getChildren().addAll(new Label("port"), textPort);
-        Button bt = new Button("connect");
-        bt.setOnAction(e -> {
-            battle = new Battle(this, false, textHost.getText());
-            battle.startConnection();
-        });
-        pane.getChildren().add(bt);
-        clientScene = new Scene(pane, WINDOW_WIDTH, WINDOW_HEIGHT);
+        Parent root;
+        try
+        {
+            ClientWaitingController cwc = new ClientWaitingController(this);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/fxml/clientWaiting.fxml"));
+            loader.setController(cwc);
+            root = loader.load();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return;
+        }
+
+        clientScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     private void initMapChooseScene()
@@ -189,6 +190,12 @@ public class SceneSwitch
         serverWaitingScene = swc.getScene();
     }
 
+    public void connectToServer(String ipAddr)
+    {
+        battle = new Battle(this, false, ipAddr);
+        battle.startConnection();
+    }
+
 
     public void changeToConnectScene(boolean isServerClicked)
     {
@@ -233,8 +240,8 @@ public class SceneSwitch
         initServerWaitingScene();
         stage.setScene(serverWaitingScene);
         battle = new Battle(this, true, "");
-//        battle.startConnection();
-            finishConnect();
+        battle.startConnection();
+//        finishConnect();
     }
 
 
