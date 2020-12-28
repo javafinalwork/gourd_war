@@ -1,6 +1,7 @@
 package cn.edu.nju.constant;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Constant
 {
@@ -27,6 +28,22 @@ public class Constant
     public final static Image[] SOIL_FRAME_LIST = getExplodeImageList(8,
             "/image/soil_explode/soil");
 
+    public final static Image[] DARK_POWER_LIST=getExplodeImageList(6,
+            "/image/dark_power/dark");
+    public final static ImageView[] CARDS = getCards();
+
+    private static ImageView[] getCards()
+    {
+        ImageView[] cards = new ImageView[7];
+        cards[0] = new ImageView("/image/card/card_red.png");
+        cards[1] = new ImageView("/image/card/card_orange.png");
+        cards[2] = new ImageView("/image/card/card_yellow.png");
+        cards[3] = new ImageView("/image/card/card_green.png");
+        cards[4] = new ImageView("/image/card/card_cyan.png");
+        cards[5] = new ImageView("/image/card/card_blue.png");
+        cards[6] = new ImageView("/image/card/card_purple.png");
+        return cards;
+    }
 
     private static Image[] getExplodeImageList(final int num, String uriPrefix)
     {

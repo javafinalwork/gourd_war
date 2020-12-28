@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -59,9 +61,20 @@ public class StartController
         ss.openRecordFile();
     }
 
+
     @FXML
     void selectMap(ActionEvent event)
     {
 
     }
+
+    public void enter_l(KeyEvent event)
+    {
+
+        if (event.getCode() == KeyCode.L)
+        {
+            ss.openRecordFile();
+        }
+    }
+
 }

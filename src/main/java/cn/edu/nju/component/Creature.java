@@ -214,7 +214,6 @@ public class Creature
 
     public boolean isTriggered()
     {
-//        System.out.println(clock);
         if (clock >= triggeredTime)
         {
             clock = 0;
@@ -222,6 +221,4 @@ public class Creature
         }
         return false;
     }
-
-
 }

@@ -7,23 +7,23 @@ import javafx.scene.image.ImageView;
 
 public class Bullet
 {
-    int duration = 1;
-    int speed = 0;
-    ImageView imgView;
-    boolean isServer;
-    int damage;
-    Direction direction;
-    BulletType bulletType;
-    double originX;
-    double originY;
-    double animationX;
-    double animationY;
-    double range;
-    Status status = Status.FLYING;
+    private int clock = 1;
+    private int speed = 0;
+    private ImageView imgView;
+    private final boolean isServer;
+    private final int damage;
+    private final Direction direction;
+    private final BulletType bulletType;
+    private final double originX;
+    private final double originY;
+    private double animationX;
+    private double animationY;
+    private final double range;
+    private Status status = Status.FLYING;
 
-    int totalFrame = 0;
-    int frameIndex = -1;
-    Image[] frameList;
+    private int totalFrame = 0;
+    private int frameIndex = -1;
+    private Image[] frameList;
 
     enum Status
     {
@@ -54,13 +54,13 @@ public class Bullet
         if (bulletType == BulletType.NORMAL)
         {
             setBulletByDirection(Constant.NORMAL_BULLET_PREFIX);
-            this.duration = 30;
+            this.clock = 30;
             this.speed = 0;
         }
         else if (bulletType == BulletType.FIRE)
         {
             setBulletByDirection(Constant.FIRE_BULLET_PREFIX);
-            this.duration = 10000;
+            this.clock = 10000;
             this.speed = 3;
             this.frameList = Constant.FIRE_FRAME_LIST;
             this.totalFrame = this.frameList.length;
@@ -68,7 +68,7 @@ public class Bullet
         else if (bulletType == BulletType.WATER)
         {
             setBulletByDirection(Constant.WATER_BULLET_PREFIX);
-            this.duration = 10000;
+            this.clock = 10000;
             this.speed = 3;
             this.frameList = Constant.WATER_FRAME_LIST;
             this.totalFrame = this.frameList.length;
@@ -77,7 +77,7 @@ public class Bullet
         else if (bulletType == BulletType.DARK)
         {
             this.imgView = new ImageView(Constant.DARK_BULLET);
-            this.duration = 10000;
+            this.clock = 10000;
             this.speed = 3;
             this.frameList = Constant.DARK_FRAME_LIST;
             this.totalFrame = this.frameList.length;
@@ -85,14 +85,14 @@ public class Bullet
         else if (bulletType == BulletType.FLASH)
         {
             setBulletByDirection(Constant.FLASH_BULLET_PREFIX);
-            this.duration = 10000;
+            this.clock = 10000;
             this.speed = 5;
             this.frameList = Constant.FLASH_FRAME_LIST;
             this.totalFrame = this.frameList.length;
         }
         else if (bulletType == BulletType.SOIL)
         {
-            this.duration = 10;
+            this.clock = 10;
             this.speed = 3;
             this.frameList = Constant.SOIL_FRAME_LIST;
             this.totalFrame = this.frameList.length;
@@ -148,8 +148,8 @@ public class Bullet
 
     private void updateFlyingBullet()
     {
-        this.duration -= 1;
-        if (this.duration <= 0 && bulletType == BulletType.NORMAL)
+        this.clock -= 1;
+        if (this.clock <= 0 && bulletType == BulletType.NORMAL)
         {
             this.status = Status.DEAD;
         }
@@ -189,8 +189,8 @@ public class Bullet
 
     private void updateExplodingBullet()
     {
-        this.duration -= 1;
-        if (this.duration <= 0)
+        this.clock -= 1;
+        if (this.clock <= 0)
         {
             if (this.frameIndex == this.totalFrame - 1)
             {
@@ -199,7 +199,7 @@ public class Bullet
             else
             {
                 this.frameIndex += 1;
-                this.duration = 10;
+                this.clock = 10;
                 this.imgView.setImage(this.frameList[this.frameIndex]);
             }
         }
@@ -209,7 +209,7 @@ public class Bullet
     {
         if (bulletType != BulletType.NORMAL)
         {
-            this.duration = 0;
+            this.clock = 0;
             this.imgView.setX(animationX);
             this.imgView.setY(animationY);
         }

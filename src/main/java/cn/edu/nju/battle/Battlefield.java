@@ -1,10 +1,7 @@
 package cn.edu.nju.battle;
 
+import cn.edu.nju.component.*;
 import cn.edu.nju.constant.Constant;
-import cn.edu.nju.component.Bullet;
-import cn.edu.nju.component.Creature;
-import cn.edu.nju.component.Direction;
-import cn.edu.nju.component.GridMap;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
@@ -373,6 +370,22 @@ public class Battlefield
             }
         }
     }
+
+    public void activatePower(BulletType bulletType, long clock)
+    {
+        if(bulletType==BulletType.DARK_POWER)
+        {
+            for(Creature cre: calabashBrothers)
+            {
+                if(cre!=null&&!cre.isDied())
+                {
+                    BattleMsg bullet=new BulletMsg(cre.getGridId(), cre.getGridId(), isServer, clock);
+                    parseMsg(bullet);
+                }
+            }
+        }
+    }
+
 
 
     public void addCalabashBrother(Creature gd)

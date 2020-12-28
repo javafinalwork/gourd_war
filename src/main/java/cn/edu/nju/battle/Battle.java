@@ -21,6 +21,7 @@ import java.util.LinkedList;
 
 public class Battle
 {
+    SceneSwitch sceneSwitch;
     Scene battleScene;
     BaseConnector connector;
     boolean isServer = false;
@@ -30,31 +31,27 @@ public class Battle
     Recorder recorder;
     Timeline timeLine;
 
-    public Battle()
-    {
-        initBattle();
-    }
-
-    /**
-     * server构造函数
-     */
     public Battle(SceneSwitch ss)
     {
-        this.isServer = true;
-        recorder = new Recorder();
+        this.sceneSwitch = ss;
         initBattle();
-        connector = new DataServer(ss, battlefield);
     }
 
-    /**
-     * client构造函数
-     */
-    public Battle(String host,  SceneSwitch ss)
+
+    public Battle(SceneSwitch ss, boolean isServer, String host)
     {
-        this.isServer = false;
+        this.isServer = isServer;
+        this.sceneSwitch = ss;
         recorder = new Recorder();
         initBattle();
-        connector = new DataClient(host,  ss, battlefield);
+        if (isServer)
+        {
+            connector = new DataServer(ss, battlefield);
+        }
+        else
+        {
+            connector = new DataClient(host, ss, battlefield);
+        }
     }
 
     /**
@@ -107,9 +104,24 @@ public class Battle
         }
     }
 
+    private void initCard()
+    {
+        double originX = 50;
+        double originY = 20;
+        for (int i = 0; i < 7; i++)
+        {
+            Constant.CARDS[i].relocate(originX + i * 120, originY);
+            pane.getChildren().add(Constant.CARDS[i]);
+        }
+        Constant.CARDS[0].setOnMouseClicked(e -> {
+
+        });
+    }
+
 
     public void start()
     {
+//        initCard();
         initCreature();
         catchClickOnPane();
         timeLine = new Timeline(new KeyFrame(Duration.seconds(0.01),
@@ -143,7 +155,7 @@ public class Battle
         {
             if (isServer)
             {
-                writeMsg(new FinishMsg(isCalabashWin, isMonsterWin,  true, clock));
+                writeMsg(new FinishMsg(isCalabashWin, isMonsterWin, true, clock));
                 timeLine.stop();
             }
         }
@@ -240,7 +252,7 @@ public class Battle
         }
 
         initCreature();
-        Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(0.01),
+        timeLine = new Timeline(new KeyFrame(Duration.seconds(0.01),
                 e -> {
                     clock += 1;
                     while (msgList.size() > 0 && clock >= msgList.getFirst().getClock())
@@ -251,7 +263,11 @@ public class Battle
                     battlefield.updateBulletCollisionOnPlayBack();
                     updateCreature();
                     updateBullet();
-                    detectGameStatus();
+                    if (msgList.size() == 0)
+                    {
+                        timeLine.stop();
+                        sceneSwitch.changeToStartScene();
+                    }
                 }
         ));
         timeLine.setCycleCount(Timeline.INDEFINITE);

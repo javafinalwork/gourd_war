@@ -23,7 +23,7 @@ public class GridMap
     {
         int lineNo = id % line;
         int colNo = id / line;
-        return new Point2D(originX + lineNo * gridWidth, originY + colNo * gridHeight - gridHeight / 2);
+        return new Point2D(originX + lineNo * gridWidth, originY + colNo * gridHeight - gridHeight * 2 / 3);
     }
 
     /**

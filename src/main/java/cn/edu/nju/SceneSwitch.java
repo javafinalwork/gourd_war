@@ -30,7 +30,6 @@ public class SceneSwitch
     Scene loginScene;
     Scene signupScene;
     Scene serverWaitingScene;
-    Scene serverScene;
     Scene clientScene;
     Scene finishScene;
     Battle battle;
@@ -100,21 +99,6 @@ public class SceneSwitch
         return null;
     }
 
-    private void initServerScene()
-    {
-        Pane pane = new Pane();
-        InetAddress addr;
-        addr = getLANAddressOnWindows();
-        if (addr == null)
-        {
-            return;
-        }
-
-        Text text = new Text(200, 100, "主机" + addr.getHostAddress() + "等待连接...");
-        pane.getChildren().add(text);
-        serverScene = new Scene(pane, WINDOW_WIDTH, WINDOW_HEIGHT);
-    }
-
     private void initClientScene()
     {
         FlowPane pane = new FlowPane();
@@ -124,7 +108,7 @@ public class SceneSwitch
         pane.getChildren().addAll(new Label("port"), textPort);
         Button bt = new Button("connect");
         bt.setOnAction(e -> {
-            battle = new Battle(textHost.getText(), this);
+            battle = new Battle(this, false, textHost.getText());
             battle.startConnection();
         });
         pane.getChildren().add(bt);
@@ -206,52 +190,51 @@ public class SceneSwitch
     }
 
 
-    public void changeToMapChooseScene()
-    {
-        stage.setScene(mapChooseScene);
-        stage.centerOnScreen();
-    }
-
     public void changeToConnectScene(boolean isServerClicked)
     {
         if (isServerClicked)
         {
+            initMapChooseScene();
             stage.setScene(mapChooseScene);
-
         }
         else
         {
+            initClientScene();
             stage.setScene(clientScene);
         }
-
     }
 
     public void changeToStartScene()
     {
+        initStartScene();
         stage.setScene(startScene);
     }
 
     public void changeToLoginScene()
     {
+        initLoginScene();
         stage.setScene(loginScene);
     }
 
     public void changeToSignupScene()
     {
+        initSignupScene();
         stage.setScene(signupScene);
     }
 
     public void changeToFinishScene(boolean isGourdWin, boolean isMonsterWin)
     {
+        initFinishScene();
         stage.setScene(finishScene);
     }
 
     public void changeToServerWaitingScene()
     {
+        initServerWaitingScene();
         stage.setScene(serverWaitingScene);
-        battle = new Battle(this);
-        battle.startConnection();
-//            finishConnect();
+        battle = new Battle(this, true, "");
+//        battle.startConnection();
+            finishConnect();
     }
 
 
@@ -267,32 +250,19 @@ public class SceneSwitch
         if (file != null)
         {
             System.out.println("choose file");
-            battle = new Battle();
+            battle = new Battle(this);
             stage.setScene(battle.getScene());
             battle.playBack(file);
         }
     }
 
 
-    public void init()
-    {
-        initStartScene();
-        initLoginScene();
-        initSignupScene();
-        initMapChooseScene();
-        initServerWaitingScene();
-        initServerScene();
-        initClientScene();
-        initFinishScene();
-    }
-
     public void start()
     {
-        init();
         stage.setTitle("葫芦娃大战妖精");
         stage.setWidth(WINDOW_WIDTH);
         stage.setHeight(WINDOW_HEIGHT);
-        stage.setScene(finishScene);
+        changeToStartScene();
         stage.getIcons().add(Constant.PROJECT_ICON);
         stage.show();
     }

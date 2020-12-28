@@ -33,8 +33,6 @@ public class Recorder
     }
 
 
-
-
     public void writeToFile(BattleMsg msg)
     {
         try

@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -38,7 +39,7 @@ public class FinishController
         try
         {
             start();
-        }catch (Exception e)
+        } catch (Exception e)
         {
             e.printStackTrace();
         }
@@ -53,6 +54,12 @@ public class FinishController
     public void start() throws Exception
     {
         AnchorPane stackPane = new AnchorPane();
+        stackPane.setOnKeyPressed(e->{
+            if(e.getCode()== KeyCode.L)
+            {
+                ss.openRecordFile();
+            }
+        });
         ImageView imageViewFinish = new ImageView("image/finish/finishBackground.png");
         imageViewFinish.setFitWidth(1280);
         imageViewFinish.setFitHeight(700);
@@ -89,29 +96,29 @@ public class FinishController
         grid.setHgap(10);
         grid.setVgap(20);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        Button btn = new Button("重新开始");
-        Button button = new Button("回放游戏");
-        Button buttonExit = new Button("退出游戏");
+        Button restartBtn = new Button("重新开始");
+        Button playbackBtn = new Button("回放游戏");
+        Button exitBtn = new Button("退出游戏");
 
         HBox hbBtn = new HBox(10);
         HBox hBox = new HBox(10);
         HBox hBoxExit = new HBox(10);
 
         DropShadow shadow = new DropShadow();
-        button.setEffect(shadow);
-        btn.setEffect(shadow);
-        buttonExit.setEffect(shadow);
+        playbackBtn.setEffect(shadow);
+        restartBtn.setEffect(shadow);
+        exitBtn.setEffect(shadow);
 
 
-        btn.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
+        restartBtn.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent e)
             {
-                btn.setEffect(shadow);
+                restartBtn.setEffect(shadow);
                 Path path = new Path();// 创建一个路径对象
-                double x = btn.getLayoutX() - 80;
-                double y = btn.getLayoutY();
+                double x = restartBtn.getLayoutX() - 80;
+                double y = restartBtn.getLayoutY();
                 path.getElements().add(new MoveTo(x, y + 18));// 从哪个位置开始动画，一般来说给组件的默认位置就行
                 path.getElements().add(new LineTo(x - 20, y + 18));// 添加一个向左移动的路径
                 path.getElements().add(new LineTo(x + 20, y + 18));// 添加一个向右移动的路径 这样就完成第一遍摇头
@@ -122,13 +129,13 @@ public class FinishController
                 PathTransition pathTransition = new PathTransition();// 创建一个动画对象
                 pathTransition.setDuration(Duration.seconds(0.5));// 动画持续时间 0.5秒
                 pathTransition.setPath(path);// 把我们设置好的动画路径放入里面
-                pathTransition.setNode(btn);// 给动画添加组件，让某个组件来完成这个动画
+                pathTransition.setNode(restartBtn);// 给动画添加组件，让某个组件来完成这个动画
                 pathTransition.setCycleCount(1);// 执行1遍
                 pathTransition.play();// 执行动画
             }
         });
 
-        btn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        restartBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent event)
@@ -138,15 +145,15 @@ public class FinishController
             }
         });
 
-        button.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
+        playbackBtn.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent event)
             {
-                button.setEffect(shadow);
+                playbackBtn.setEffect(shadow);
                 Path path = new Path();// 创建一个路径对象
-                double x = button.getLayoutX() - 80;
-                double y = button.getLayoutY();
+                double x = playbackBtn.getLayoutX() - 80;
+                double y = playbackBtn.getLayoutY();
                 path.getElements().add(new MoveTo(x, y + 18));// 从哪个位置开始动画，一般来说给组件的默认位置就行
                 path.getElements().add(new LineTo(x - 20, y + 18));// 添加一个向左移动的路径
                 path.getElements().add(new LineTo(x + 20, y + 18));// 添加一个向右移动的路径 这样就完成第一遍摇头
@@ -156,32 +163,26 @@ public class FinishController
                 PathTransition pathTransition = new PathTransition();// 创建一个动画对象
                 pathTransition.setDuration(Duration.seconds(0.5));// 动画持续时间 0.5秒
                 pathTransition.setPath(path);// 把我们设置好的动画路径放入里面
-                pathTransition.setNode(button);// 给动画添加组件，让某个组件来完成这个动画
+                pathTransition.setNode(playbackBtn);// 给动画添加组件，让某个组件来完成这个动画
                 pathTransition.setCycleCount(1);// 执行1遍
                 pathTransition.play();// 执行动画
             }
         });
 
 
-        button.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent event)
-            {
-                //TODO
-//                Sing();
-            }
+        playbackBtn.setOnMouseClicked(e->{
+            ss.openRecordFile();
         });
 
-        buttonExit.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
+        exitBtn.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent event)
             {
-                buttonExit.setEffect(shadow);
+                exitBtn.setEffect(shadow);
                 Path path = new Path();// 创建一个路径对象
-                double x = buttonExit.getLayoutX() - 80;
-                double y = buttonExit.getLayoutY();
+                double x = exitBtn.getLayoutX() - 80;
+                double y = exitBtn.getLayoutY();
                 path.getElements().add(new MoveTo(x, y + 18));// 从哪个位置开始动画，一般来说给组件的默认位置就行
                 path.getElements().add(new LineTo(x - 20, y + 18));// 添加一个向左移动的路径
                 path.getElements().add(new LineTo(x + 20, y + 18));// 添加一个向右移动的路径 这样就完成第一遍摇头
@@ -191,13 +192,13 @@ public class FinishController
                 PathTransition pathTransition = new PathTransition();// 创建一个动画对象
                 pathTransition.setDuration(Duration.seconds(0.5));// 动画持续时间 0.5秒
                 pathTransition.setPath(path);// 把我们设置好的动画路径放入里面
-                pathTransition.setNode(buttonExit);// 给动画添加组件，让某个组件来完成这个动画
+                pathTransition.setNode(exitBtn);// 给动画添加组件，让某个组件来完成这个动画
                 pathTransition.setCycleCount(1);// 执行1遍
                 pathTransition.play();// 执行动画
             }
         });
 
-        buttonExit.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        exitBtn.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent event)
@@ -207,31 +208,36 @@ public class FinishController
             }
         });
 
-        btn.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>()
+        restartBtn.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent e)
             {
-                btn.setEffect(null);
+                restartBtn.setEffect(null);
             }
         });
-        btn.setOnAction(new EventHandler<ActionEvent>()
-        {
-            @Override
-            public void handle(ActionEvent event)
-            {
-                System.out.println("RESATART GAME");
-//                Sing();
-            }
+
+        restartBtn.setOnMouseClicked(e->{
+            ss.changeToStartScene();
         });
+//        restartBtn.setOnAction(new EventHandler<ActionEvent>()
+//        {
+//            @Override
+//            public void handle(ActionEvent event)
+//            {
+//                System.out.println("RESATART GAME");
+//
+////                Sing();
+//            }
+//        });
 
 
         hbBtn.setAlignment(Pos.CENTER);
-        hbBtn.getChildren().addAll(btn);
+        hbBtn.getChildren().addAll(restartBtn);
         hBox.setAlignment(Pos.CENTER);
-        hBox.getChildren().addAll(button);
+        hBox.getChildren().addAll(playbackBtn);
         hBoxExit.setAlignment(Pos.CENTER);
-        hBoxExit.getChildren().addAll(buttonExit);
+        hBoxExit.getChildren().addAll(exitBtn);
 
         grid.setOpacity(1);
         grid.add(imageView, 1, 0);
