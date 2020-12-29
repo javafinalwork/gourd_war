@@ -1,5 +1,6 @@
 package cn.edu.nju.battle;
 
+import cn.edu.nju.component.GridMap;
 import cn.edu.nju.constant.Constant;
 import cn.edu.nju.SceneSwitch;
 import cn.edu.nju.component.BulletType;
@@ -34,34 +35,35 @@ public class Battle
     public Battle(SceneSwitch ss)
     {
         this.sceneSwitch = ss;
-        initBattle();
     }
 
 
-    public Battle(SceneSwitch ss, boolean isServer, String ipAddr)
+    public Battle(SceneSwitch ss, boolean isServer, String ipAddr, int mapId)
     {
         this.isServer = isServer;
         this.sceneSwitch = ss;
         recorder = new Recorder();
-        initBattle();
+        recorder.writeToFile(new MapMsg(mapId, isServer, 0));
         if (isServer)
         {
-            connector = new DataServer(ss, battlefield);
+            connector = new DataServer(ss, battlefield, mapId);
         }
         else
         {
-            connector = new DataClient(ipAddr, ss, battlefield);
+            connector = new DataClient(ss, battlefield, ipAddr);
         }
     }
+
 
     /**
      * 初始化战斗场景
      */
-    private void initBattle()
+    private void initBattle(int mapId)
     {
-        pane.getChildren().add(new ImageView(Constant.BATTLE_IMG));
-        battleScene = new Scene(pane, 1200, 700);
-        battlefield = new Battlefield(isServer, pane, this, recorder);
+        pane.getChildren().add(new ImageView(Constant.BATTLE_IMAGES[mapId]));
+        battleScene = new Scene(pane, Constant.WINDOW_WIDTH, Constant.WINDOW_HEIGHT);
+        battlefield = new Battlefield(isServer, pane, this, recorder,  mapId);
+        initCreature();
     }
 
     /**
@@ -119,10 +121,11 @@ public class Battle
     }
 
 
-    public void start()
+    public void start(int mapId)
     {
 //        initCard();
-        initCreature();
+        initBattle(mapId);
+        connector.setBattlefield(battlefield);
         catchClickOnPane();
         timeLine = new Timeline(new KeyFrame(Duration.seconds(0.01),
                 e -> {
@@ -170,7 +173,7 @@ public class Battle
         pane.setOnMouseClicked(e -> {
             double x = e.getSceneX();
             double y = e.getSceneY();
-//            System.out.println("x: " + x + " y: " + y);
+            System.out.println("x: " + x + " y: " + y);
             BattleMsg msg = battlefield.moveCreatureEvent(x, y, clock);
             writeMsg(msg);
         });
@@ -251,7 +254,17 @@ public class Battle
             e.printStackTrace();
         }
 
-        initCreature();
+        if (msgList.size() >= 1)
+        {
+            initBattle(msgList.getFirst().getMapId());
+            msgList.removeFirst();
+        }
+        else
+        {
+            sceneSwitch.changeToStartScene();
+            return;
+        }
+
         timeLine = new Timeline(new KeyFrame(Duration.seconds(0.01),
                 e -> {
                     clock += 1;

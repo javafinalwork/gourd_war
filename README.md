@@ -84,7 +84,13 @@ DamageMsg(String name, int damage, boolean isServer, long clock)
 
 以葫芦娃为例，因为所有葫芦娃只能在网格上行动，因此申请一个大小为网格总数的`calabashBrothers`的数组。将所有网格从左到右，从上到下从0开始编号，如果编号为id的网格上有葫芦娃，则`calabashBrothers[id]`上放置一个葫芦娃对象，否则置为`null`。那么所有对生物的操作可以通过网格间接操作，当需要移动生物时，可以通过点击的网格上是否有生物，以及所要移动到的网格是否为空闲；当需要发射子弹时，只要给出开始网格的id以及方向和最大距离即可；当子弹造成伤害时，只要给出目标网格id上的生物姓名，以及伤害值即可。这三种刚好对应为`MoveMsg`,`BulletMsg`,`DamageMsg`.
 
+#### map模块
 
+...
+
+### 测试
+
+...
 
 
 

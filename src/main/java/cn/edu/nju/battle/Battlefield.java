@@ -13,8 +13,8 @@ import java.util.HashMap;
 
 public class Battlefield
 {
-    GridMap gridMap = new GridMap();
-    final int GRID_NUM = gridMap.getGridNum();
+    GridMap gridMap;
+    final int GRID_NUM = 35;
     Creature[] calabashBrothers = new Creature[GRID_NUM];
     Creature[] monsters = new Creature[GRID_NUM];
     HashMap<String, Creature> creatureMap = new HashMap<>();
@@ -23,6 +23,7 @@ public class Battlefield
 
     final int INVALID_ID = -1;
     int moveId = INVALID_ID;
+    int mapId;
 
     boolean isServer;
     Pane pane;
@@ -31,12 +32,28 @@ public class Battlefield
     ArrayList<Bullet> bullets = new ArrayList<>();
     ArrayList<ImageView> grayGrids = new ArrayList<>();
 
-    Battlefield(boolean isServer, Pane pane, Battle battle, Recorder recorder)
+    Battlefield(boolean isServer, Pane pane, Battle battle, Recorder recorder, int mapId)
     {
         this.isServer = isServer;
         this.pane = pane;
         this.battle = battle;
         this.recorder = recorder;
+        this.gridMap = initGridMap(mapId);
+        this.mapId=mapId;
+    }
+
+    private GridMap initGridMap(int mapId)
+    {
+        if (mapId == 0)
+        {
+            return new GridMap(245, 175, 115, 85, Constant.GRAY_GRID0);
+
+        }
+        else if (mapId == 1)
+        {
+            return new GridMap(67, 178, 164, 91, Constant.GRAY_GRID1);
+        }
+        return new GridMap(245, 175, 115, 85, Constant.GRAY_GRID0);
     }
 
     public void parseMsgOnPlayBack(BattleMsg msg)
@@ -209,7 +226,7 @@ public class Battlefield
     {
         for (int id : gridMap.getNeighborGrid(centerId))
         {
-            ImageView imageView = new ImageView(Constant.GRAY_GRID);
+            ImageView imageView = new ImageView(gridMap.getGrayGrid());
             Point2D p = gridMap.gridIdToPos(id);
             imageView.relocate(p.getX(), p.getY());
             grayGrids.add(imageView);
@@ -373,19 +390,18 @@ public class Battlefield
 
     public void activatePower(BulletType bulletType, long clock)
     {
-        if(bulletType==BulletType.DARK_POWER)
+        if (bulletType == BulletType.DARK_POWER)
         {
-            for(Creature cre: calabashBrothers)
+            for (Creature cre : calabashBrothers)
             {
-                if(cre!=null&&!cre.isDied())
+                if (cre != null && !cre.isDied())
                 {
-                    BattleMsg bullet=new BulletMsg(cre.getGridId(), cre.getGridId(), isServer, clock);
+                    BattleMsg bullet = new BulletMsg(cre.getGridId(), cre.getGridId(), isServer, clock);
                     parseMsg(bullet);
                 }
             }
         }
     }
-
 
 
     public void addCalabashBrother(Creature gd)

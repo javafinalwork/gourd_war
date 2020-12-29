@@ -47,9 +47,6 @@
         </dependency>
     </dependencies>
 
-
-
-
     <build>
         <plugins>
             <plugin>
@@ -75,6 +72,18 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
@@ -109,22 +118,6 @@
                     <!-- 之后，使用getResource("fxml/xx.fxml")这样子 -->
                 </includes>
             </resource>
-
-<!--            <resource>-->
-<!--                <directory>src/main/resources/image</directory>-->
-<!--                <includes>-->
-<!--                    <include>**/map_choose/*.png</include>-->
-<!--                    <include>**/map_choose/*.jpg</include>-->
-<!--                    <include>**/dark_explode/*.png</include>-->
-<!--                    <include>**/fire_explode/*.png</include>-->
-<!--                    <include>**/flash_explode/*.png</include>-->
-<!--                    <include>**/soil_explode/*.png</include>-->
-<!--                    <include>**/water_explode/*.png</include>-->
-<!--                </includes>-->
-<!--                <filtering>true</filtering>-->
-<!--            </resource>-->
         </resources>
     </build>
-
-
 </project>

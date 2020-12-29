@@ -23,6 +23,11 @@ class BaseConnector implements Runnable
         this.battlefield = battlefield;
     }
 
+    public void setBattlefield(Battlefield battlefield)
+    {
+        this.battlefield = battlefield;
+    }
+
 
     @Override
     public void run()
@@ -41,10 +46,12 @@ class DataServer extends BaseConnector
 {
     ObjectOutputStream serverOos;
     ObjectInputStream clientOis;
+    int mapId;
 
-    DataServer(SceneSwitch ss, Battlefield battlefield)
+    DataServer(SceneSwitch ss, Battlefield battlefield, int mapId)
     {
         super(ss, battlefield);
+        this.mapId = mapId;
     }
 
     @Override
@@ -67,7 +74,8 @@ class DataServer extends BaseConnector
         clientOis = new ObjectInputStream(clientSocket.getInputStream());
         serverOos = new ObjectOutputStream(clientSocket.getOutputStream());
         // 回调FX函数在非FX线程
-        Platform.runLater(() -> ss.finishConnect());
+        Platform.runLater(() -> ss.finishConnect(mapId));
+        write(new MapMsg(mapId, true, 0));
 
         BattleMsg msg = null;
 
@@ -103,7 +111,7 @@ class DataClient extends BaseConnector
     ObjectOutputStream clientOos;
     ObjectInputStream serverOis;
 
-    DataClient(String ipAddr, SceneSwitch ss, Battlefield battlefield)
+    DataClient(SceneSwitch ss, Battlefield battlefield, String ipAddr)
     {
         super(ss, battlefield);
         this.ipAddr = ipAddr;
@@ -128,7 +136,6 @@ class DataClient extends BaseConnector
 
         clientOos = new ObjectOutputStream(echoSocket.getOutputStream());
         serverOis = new ObjectInputStream(echoSocket.getInputStream());
-        Platform.runLater(() -> ss.finishConnect());
         BattleMsg msg;
 
         try
@@ -147,7 +154,15 @@ class DataClient extends BaseConnector
                     Platform.runLater(() -> ss.changeToFinishScene(isCalabashWin, isMonsterWin));
                     break;
                 }
-                battlefield.parseMsg(msg);
+                else if (msg.msgType == MsgType.MAP_MSG)
+                {
+                    final int mapId = msg.getMapId();
+                    Platform.runLater(() -> ss.finishConnect(mapId));
+                }
+                else
+                {
+                    battlefield.parseMsg(msg);
+                }
             }
         } catch (EOFException ignored)
         {

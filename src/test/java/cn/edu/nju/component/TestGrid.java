@@ -1,5 +1,6 @@
 package cn.edu.nju.component;
 
+import cn.edu.nju.constant.Constant;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class TestGrid
 {
-    GridMap gridMap = new GridMap();
+    GridMap gridMap = new GridMap(245,175, 115,85, null);
 
     @Test
     public void testGetNeighborGrid()

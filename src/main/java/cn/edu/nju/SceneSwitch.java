@@ -5,13 +5,9 @@ import cn.edu.nju.constant.Constant;
 import cn.edu.nju.map.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 
 
 import java.io.File;
@@ -33,8 +29,6 @@ public class SceneSwitch
     Battle battle;
     MapChange mapChange;
     FinishController finishController;
-    final int WINDOW_WIDTH = 1280;
-    final int WINDOW_HEIGHT = 700;
 
     public SceneSwitch(Stage stage)
     {
@@ -48,7 +42,7 @@ public class SceneSwitch
         {
             StartController sc = new StartController(this);
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/start.fxml"));
+            loader.setLocation(getClass().getResource(Constant.START_FXML));
             loader.setController(sc);
             root = loader.load();
         } catch (IOException e)
@@ -56,14 +50,14 @@ public class SceneSwitch
             e.printStackTrace();
             return;
         }
-        startScene = new Scene(root, 1200, 700);
+        startScene = new Scene(root, Constant.WINDOW_WIDTH, Constant.WINDOW_HEIGHT);
     }
 
 
-    public void finishConnect()
+    public void finishConnect(int mapId)
     {
+        battle.start(mapId);
         stage.setScene(battle.getScene());
-        battle.start();
     }
 
     private InetAddress getLANAddressOnWindows()
@@ -104,7 +98,7 @@ public class SceneSwitch
         {
             ClientWaitingController cwc = new ClientWaitingController(this);
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/clientWaiting.fxml"));
+            loader.setLocation(getClass().getResource(Constant.CLIENT_WAITING_FXML));
             loader.setController(cwc);
             root = loader.load();
         } catch (IOException e)
@@ -113,7 +107,7 @@ public class SceneSwitch
             return;
         }
 
-        clientScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        clientScene = new Scene(root, Constant.WINDOW_WIDTH, Constant.WINDOW_HEIGHT);
     }
 
     private void initMapChooseScene()
@@ -135,7 +129,7 @@ public class SceneSwitch
         {
             LoginController lc = new LoginController(this);
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/login.fxml"));
+            loader.setLocation(getClass().getResource(Constant.LOGIN_FXML));
             loader.setController(lc);
             root = loader.load();
         } catch (IOException e)
@@ -143,7 +137,7 @@ public class SceneSwitch
             e.printStackTrace();
             return;
         }
-        loginScene = new Scene(root, 1280, 700);
+        loginScene = new Scene(root, Constant.WINDOW_WIDTH, Constant.WINDOW_HEIGHT);
     }
 
     private void initSignupScene()
@@ -153,7 +147,7 @@ public class SceneSwitch
         {
             SignUpController signup = new SignUpController(this);
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/fxml/signup.fxml"));
+            loader.setLocation(getClass().getResource(Constant.SIGNUP_FXML));
             loader.setController(signup);
             root = loader.load();
         } catch (IOException e)
@@ -161,7 +155,7 @@ public class SceneSwitch
             e.printStackTrace();
             return;
         }
-        signupScene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        signupScene = new Scene(root, Constant.WINDOW_WIDTH, Constant.WINDOW_HEIGHT);
     }
 
     private void initServerWaitingScene()
@@ -180,19 +174,15 @@ public class SceneSwitch
                 e.printStackTrace();
                 return;
             }
-            s = addr.getHostAddress();
         }
-        else
-        {
-            s = addr.getHostAddress();
-        }
+        s = addr.getHostAddress();
         ServerWaitingController swc = new ServerWaitingController(s);
         serverWaitingScene = swc.getScene();
     }
 
     public void connectToServer(String ipAddr)
     {
-        battle = new Battle(this, false, ipAddr);
+        battle = new Battle(this, false, ipAddr, 0);
         battle.startConnection();
     }
 
@@ -235,13 +225,13 @@ public class SceneSwitch
         stage.setScene(finishScene);
     }
 
-    public void changeToServerWaitingScene()
+    public void changeToServerWaitingScene(int mapId)
     {
         initServerWaitingScene();
         stage.setScene(serverWaitingScene);
-        battle = new Battle(this, true, "");
-        battle.startConnection();
-//        finishConnect();
+        battle = new Battle(this, true, "", mapId);
+//        battle.startConnection();
+        finishConnect(mapId);
     }
 
 
@@ -256,19 +246,18 @@ public class SceneSwitch
         File file = fileChooser.showOpenDialog(stage);
         if (file != null)
         {
-            System.out.println("choose file");
             battle = new Battle(this);
-            stage.setScene(battle.getScene());
             battle.playBack(file);
+            stage.setScene(battle.getScene());
         }
     }
 
 
     public void start()
     {
-        stage.setTitle("葫芦娃大战妖精");
-        stage.setWidth(WINDOW_WIDTH);
-        stage.setHeight(WINDOW_HEIGHT);
+        stage.setTitle(Constant.GAME_TITLE);
+        stage.setWidth(Constant.WINDOW_WIDTH);
+        stage.setHeight(Constant.WINDOW_HEIGHT);
         changeToStartScene();
         stage.getIcons().add(Constant.PROJECT_ICON);
         stage.show();

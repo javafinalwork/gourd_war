@@ -7,6 +7,7 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 
 import javafx.event.EventHandler;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
@@ -21,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class MapChange
@@ -38,7 +40,7 @@ public class MapChange
     private int pic1y;
     private int picz;
     private SceneSwitch ss;
-
+   private ArrayList<Integer> pictureOrder;
     public MapChange(SceneSwitch ss)
     {
         this.ss = ss;
@@ -81,11 +83,11 @@ public class MapChange
         btn_right.setPreserveRatio(true);
         hb.getChildren().addAll(btn_left, buttonSelect, btn_right);
 
-        Image image1 = new Image("/image/battle.png");
-        Image image2 = new Image("/image/map_choose/battle.png");
-        Image image3 = new Image("/image/map_choose/battle.png");
+        Image image1 = new Image("/image/map_choose/battle.png");
+        Image image2 = new Image("/image/map_choose/battle1.png");
+        Image image3 = new Image("/image/map_choose/background.png");
 
-        ImageView im1 = new ImageView("/image/battle.png");
+        ImageView im1 = new ImageView("/image/map_choose/battle.png");
         im1.setImage(image1);
         im1.setPreserveRatio(true);
         im1.setFitWidth(weight / 2);
@@ -124,6 +126,13 @@ public class MapChange
         ArrayList<Image> imageArrayList = new ArrayList<>();
 
 
+        pictureOrder=new ArrayList<>();
+        pictureOrder.add(1);
+        pictureOrder.add(2);
+        pictureOrder.add(3);
+        System.out.print(pictureOrder.get(0));
+        System.out.print(pictureOrder.get(1));
+        System.out.print(pictureOrder.get(2));
         imageList.add(im1);
         imageList.add(im2);
         imageList.add(im3);
@@ -136,7 +145,7 @@ public class MapChange
             @Override
             public void handle(MouseEvent event) {
                 System.out.println("这张图片被选择了");
-                ss.changeToServerWaitingScene();
+                ss.changeToServerWaitingScene(pictureOrder.get(1)-1);
             }
         });
 
@@ -145,9 +154,29 @@ public class MapChange
             @Override
             public void handle(MouseEvent event)
             {
-                ImageView tmpLeft = imageList.get(0);
-                ImageView tmpMiddle = imageList.get(1);
-                ImageView tmpRight = imageList.get(2);
+                ArrayList<ImageView> tmpArrayList=(ArrayList<ImageView>) imageList.clone();
+
+                ImageView tmpLeft = tmpArrayList.get(0);
+                ImageView tmpMiddle = tmpArrayList.get(1);
+                ImageView tmpRight = tmpArrayList.get(2);
+
+
+                ArrayList<Integer> tmpOrder= (ArrayList<Integer>) pictureOrder.clone();
+                Integer first=tmpOrder.get(0);
+                Integer second=tmpOrder.get(1);
+                Integer third=tmpOrder.get(2);
+
+                pictureOrder.clear();
+                pictureOrder.add(third);
+                pictureOrder.add(first);
+                pictureOrder.add(second);
+                System.out.print(pictureOrder.get(0));
+                System.out.print(pictureOrder.get(1));
+                System.out.print(pictureOrder.get(2));
+
+                //ImageView tmpLeft = imageList.get(0);
+                //ImageView tmpMiddle = imageList.get(1);
+                //ImageView tmpRight = imageList.get(2);
                 middleToRight(tmpMiddle);
                 rightToLeft(tmpRight);
                 leftToMiddle(tmpLeft);
@@ -157,9 +186,9 @@ public class MapChange
                 imageList.add(tmpMiddle);
                 anchorPane1.getChildren().clear();
                 anchorPane1.getChildren().addAll(tmpRight, tmpMiddle, tmpLeft);
-                im1.setImage(tmpRight.getImage());
-                im2.setImage(tmpMiddle.getImage());
-                im3.setImage(tmpLeft.getImage());
+                //im1.setImage(tmpRight.getImage());
+                //im2.setImage(tmpMiddle.getImage());
+                //im3.setImage(tmpLeft.getImage());
             }
         });
 
@@ -168,21 +197,43 @@ public class MapChange
             @Override
             public void handle(MouseEvent event)
             {
-                ImageView tmpLeft = imageList.get(0);
-                ImageView tmpMiddle = imageList.get(1);
-                ImageView tmpRight = imageList.get(2);
+
+                //ImageView tmpLeft = imageList.get(0);
+                //ImageView tmpMiddle = imageList.get(1);
+                //ImageView tmpRight = imageList.get(2);
+                ArrayList<ImageView> tmpArrayList= (ArrayList<ImageView>) imageList.clone();
+                ImageView tmpLeft = tmpArrayList.get(0);
+                ImageView tmpMiddle = tmpArrayList.get(1);
+                ImageView tmpRight = tmpArrayList.get(2);
+
+                ArrayList<Integer> tmpOrder= (ArrayList<Integer>) pictureOrder.clone();
+                Integer first=tmpOrder.get(0);
+                Integer second=tmpOrder.get(1);
+                Integer third=tmpOrder.get(2);
+
+                pictureOrder.clear();
+                pictureOrder.add(second);
+                pictureOrder.add(third);
+                pictureOrder.add(first);
+                System.out.print(pictureOrder.get(0));
+                System.out.print(pictureOrder.get(1));
+                System.out.print(pictureOrder.get(2));
+
+
                 leftToRight(tmpLeft);
                 middleToLeft(tmpMiddle);
                 rightToMiddle(tmpRight);
+
                 imageList.clear();
                 imageList.add(tmpMiddle);
                 imageList.add(tmpRight);
                 imageList.add(tmpLeft);
+
                 anchorPane1.getChildren().clear();
                 anchorPane1.getChildren().addAll(tmpLeft, tmpMiddle, tmpRight);
-                im1.setImage(tmpLeft.getImage());
-                im2.setImage(tmpMiddle.getImage());
-                im3.setImage(tmpRight.getImage());
+               // im1.setImage(tmpLeft.getImage());
+                //im2.setImage(tmpMiddle.getImage());
+                //im3.setImage(tmpRight.getImage());
             }
         });
 
@@ -208,6 +259,8 @@ public class MapChange
 
     private void middleToRight(ImageView image)
     {
+
+
         TranslateTransition translate = new TranslateTransition();
         translate.setDuration(Duration.seconds(0.5));
         translate.setFromX(pic2);
@@ -237,6 +290,8 @@ public class MapChange
 
     private void rightToLeft(ImageView image)
     {
+
+
         TranslateTransition translate = new TranslateTransition();
         translate.setDuration(Duration.seconds(0.5));
         translate.setFromX(pic3);
@@ -266,6 +321,8 @@ public class MapChange
 
     private void leftToMiddle(ImageView image)
     {
+
+
         TranslateTransition translate = new TranslateTransition();
         translate.setDuration(Duration.seconds(0.5));
         translate.setFromX(pic1);
@@ -295,6 +352,8 @@ public class MapChange
 
     private void middleToLeft(ImageView image)
     {
+
+
         TranslateTransition translate = new TranslateTransition();
         translate.setDuration(Duration.seconds(0.5));
         translate.setFromX(pic2);
@@ -324,6 +383,8 @@ public class MapChange
 
     private void rightToMiddle(ImageView image)
     {
+
+
         TranslateTransition translate = new TranslateTransition();
         translate.setDuration(Duration.seconds(0.5));
         translate.setFromX(pic3);
@@ -353,6 +414,8 @@ public class MapChange
 
     private void leftToRight(ImageView image)
     {
+
+
         TranslateTransition translate = new TranslateTransition();
         translate.setDuration(Duration.seconds(0.5));
         translate.setFromX(pic1);

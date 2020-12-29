@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 enum MsgType
 {
-    MOVE_MSG, DAMAGE_MSG, BULLET_MSG, FINISH_MSG
+    MOVE_MSG, DAMAGE_MSG, BULLET_MSG, FINISH_MSG, MAP_MSG
 }
 
 /**
@@ -66,6 +66,11 @@ class BattleMsg implements Serializable
     public boolean isMonsterWin()
     {
         return false;
+    }
+
+    public int getMapId()
+    {
+        return 0;
     }
 
 
@@ -195,3 +200,22 @@ class FinishMsg extends BattleMsg
         return isMonsterWin;
     }
 }
+
+class MapMsg extends BattleMsg
+{
+    int mapId;
+
+    MapMsg(int mapId, boolean isServer, long clock)
+    {
+        super(MsgType.MAP_MSG, isServer, clock);
+        this.mapId = mapId;
+    }
+
+    @Override
+    public int getMapId()
+    {
+        return mapId;
+    }
+
+}
+

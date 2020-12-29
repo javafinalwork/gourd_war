@@ -1,19 +1,37 @@
 package cn.edu.nju.component;
 
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
 public class GridMap
 {
-    final double gridWidth = 115;
-    final double gridHeight = 85;
-    final double originX = 245;
-    final double originY = 175;
+    final double gridWidth;
+    final double gridHeight;
+    final double originX;
+    final double originY;
     final int line = 7;
     final int col = 5;
-    final double boundX = originX + line * gridWidth;
-    final double boundY = originY + col * gridHeight;
+    final double boundX;
+    final double boundY;
+    final Image grayGrid;
+
+    public GridMap(double originX, double originY, double gridWidth, double gridHeight, Image grayGrid)
+    {
+        this.originX = originX;
+        this.originY = originY;
+        this.gridHeight = gridHeight;
+        this.gridWidth = gridWidth;
+        this.boundX = originX + line * gridWidth;
+        this.boundY = originY + col * gridHeight;
+        this.grayGrid = grayGrid;
+    }
+
+    public Image getGrayGrid()
+    {
+        return grayGrid;
+    }
 
     /**
      * 根据id得到生物在grid上的站位
