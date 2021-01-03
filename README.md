@@ -1,16 +1,56 @@
+# 葫芦娃大战妖精
+
+### 作者与分工
+
+**181860026 韩进**
+
+负责框架的设计，数据通信与同步，战斗逻辑的实现，回放功能设计
+
+**181860067 努吉别克**
+
+负责所有javafx界面的设计，各种图片资源素材的制作与搜索，component模块中的葫芦娃类、子弹类的的编写
+
 ### 游戏介绍
 
-本游戏为双人实时对战游戏
+本游戏为双人实时对战游戏，双方操作各自阵营的葫芦娃或妖精，在固定图格上移动进行战斗，直到一方阵营全部死亡后游戏结束。
 
 战斗开始界面
 
 ![开始界面](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/start.jpg)
 
+登录界面
 
+这里可以选择通过server或者client登录，同时可以选择通过游客身份或者账号密码登录，如果没有账号密码可以选择注册按钮进行注册（若本地数据库没有配置请务必选择Tourist登录！）
+
+![登录界面](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/server.png)
+
+如果选择了以server登录，则会进入地图选择界面
+
+![地图](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/map.jpg)
+
+选择地图后会进入等待连接界面
+
+![server等待连接](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/serverwaiting.png)
+
+如果选择以client登录，则会要求输入server的ip地址
+
+![客户端](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/client.png)
+
+连接成功后会进入战斗界面，下面是部分战斗的展示
 
 ![battle1](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/battlegif1.gif)
 
+![battle2](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/battlegif2.gif)
 
+![battle3](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/battlegif3.gif)
+
+战斗结束后
+
+![战斗结束](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/finish.jpg)
+
+在开始界面或者结束界面按下L或者直接点击回放游戏按钮选择回放文件即可播放，然后选择游戏目录下的record文件夹中的文件即可，记录文件的命名为当时的游戏时间组成的字符串。
+
+![回放](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/record.png)
 
 ### 模块介绍
 
@@ -114,9 +154,9 @@ DamageMsg(String name, int damage, boolean isServer, long clock)
 
 #### 测试
 
+通过JUnit单元测试对包括数据初始化，各种图格操作，回放文件记录的正确性，资源同步锁定的正确性进行了测试，其余的javafx界面的内容直接通过用户的交互手动测试。
 
 
-...
 
 
 
