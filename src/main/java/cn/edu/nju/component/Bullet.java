@@ -98,7 +98,7 @@ public class Bullet
             this.totalFrame = this.frameList.length;
             this.imgView = new ImageView(this.frameList[0]);
         }
-        else if(bulletType==BulletType.DARK_POWER)
+        else if (bulletType == BulletType.DARK_POWER)
         {
             this.clock = 10;
             this.speed = 3;
@@ -157,7 +157,8 @@ public class Bullet
     private void updateFlyingBullet()
     {
         this.clock -= 1;
-        if (this.clock <= 0 && bulletType == BulletType.NORMAL)
+        if (this.clock <= 0 && (bulletType == BulletType.NORMAL ||
+                bulletType == BulletType.DARK_POWER || bulletType == BulletType.SOIL))
         {
             this.status = Status.DEAD;
         }

@@ -25,6 +25,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import javafx.scene.text.Text;
 
@@ -38,6 +39,7 @@ public class FinishController
     public FinishController(SceneSwitch ss, boolean isCalabashWin, boolean isMonsterWin)
     {
         this.ss = ss;
+        initEndText(isCalabashWin, isMonsterWin);
         try
         {
             start();
@@ -45,7 +47,6 @@ public class FinishController
         {
             e.printStackTrace();
         }
-        initEndText(isCalabashWin, isMonsterWin);
     }
 
     private void initEndText(boolean isCalabashWin, boolean isMonsterWin)
@@ -250,6 +251,7 @@ public class FinishController
         text.setText(endText);
         text.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 70));
         text.setFill(Color.BLACK);
+        text.setTextAlignment(TextAlignment.CENTER);
 
         hbBtn.setAlignment(Pos.CENTER);
         hbBtn.getChildren().addAll(restartBtn);

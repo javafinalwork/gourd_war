@@ -1,6 +1,16 @@
 ### 游戏介绍
 
-...
+本游戏为双人实时对战游戏
+
+战斗开始界面
+
+![开始界面](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/start.jpg)
+
+
+
+![battle1](https://github.com/nwod-edispu/img_storage/blob/master/gourd_war/battlegif1.gif)
+
+
 
 ### 模块介绍
 
