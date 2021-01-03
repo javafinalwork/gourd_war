@@ -116,9 +116,9 @@ public class SceneSwitch
         mapChooseScene = mapChange.getScene();
     }
 
-    private void initFinishScene()
+    private void initFinishScene(boolean isCalabashWin, boolean isMonsterWin)
     {
-        this.finishController = new FinishController(this);
+        this.finishController = new FinishController(this, isCalabashWin, isMonsterWin);
         finishScene = this.finishController.getScene();
     }
 
@@ -219,9 +219,9 @@ public class SceneSwitch
         stage.setScene(signupScene);
     }
 
-    public void changeToFinishScene(boolean isGourdWin, boolean isMonsterWin)
+    public void changeToFinishScene(boolean isCalabashWin, boolean isMonsterWin)
     {
-        initFinishScene();
+        initFinishScene(isCalabashWin, isMonsterWin);
         stage.setScene(finishScene);
     }
 

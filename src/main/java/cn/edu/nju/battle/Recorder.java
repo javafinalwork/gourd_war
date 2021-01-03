@@ -11,7 +11,7 @@ public class Recorder
     Recorder()
     {
         String name = generateFileName();
-
+        name = "record/" + name;
         try
         {
             oos = new ObjectOutputStream(new FileOutputStream(name));
@@ -52,7 +52,18 @@ public class Recorder
         SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间
         sdf.applyPattern("yyyy_MM_dd_HH_mm_ss");
         Date date = new Date();// 获取当前时间
-        System.out.println(sdf.format(date));
         return sdf.format(date);
     }
+
+    public void close()
+    {
+        try
+        {
+            oos.close();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 }

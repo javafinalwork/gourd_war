@@ -143,10 +143,11 @@ public class Battle
         boolean isMonsterWin = battlefield.isMonsterWin();
         if (isCalabashWin || isMonsterWin)
         {
+            timeLine.stop();
+            recorder.close();
             if (isServer)
             {
                 writeMsg(new FinishMsg(isCalabashWin, isMonsterWin, true, clock));
-                timeLine.stop();
             }
         }
     }

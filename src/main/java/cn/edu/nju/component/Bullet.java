@@ -98,15 +98,6 @@ public class Bullet
             this.totalFrame = this.frameList.length;
             this.imgView = new ImageView(this.frameList[0]);
         }
-        else if (bulletType == BulletType.RECOVERY)
-        {
-            this.clock = 10;
-            this.speed = 3;
-            this.frameList = Constant.RECOVERY_FRAME_LIST;
-//            this.frameList = Constant.SOIL_FRAME_LIST;
-            this.totalFrame = this.frameList.length;
-            this.imgView = new ImageView(this.frameList[0]);
-        }
         else if(bulletType==BulletType.DARK_POWER)
         {
             this.clock = 10;

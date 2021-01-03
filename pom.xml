@@ -97,7 +97,6 @@
                     <include>**/*.fxml</include>
                     <include>**/fxml/*.fxml</include>
                     <include>**/css/*.css</include>
-                    <include>**/media/*.mp3</include>
                     <include>**/image/start/*.png</include>
                     <include>**/image/map_choose/*.png</include>
                     <include>**/image/map_choose/*.jpg</include>
@@ -109,9 +108,6 @@
                     <include>**/image/dark_power/*.png</include>
                     <include>**/image/login/*.png</include>
                     <include>**/image/finish/*.png</include>
-                    <include>**/image/activation/*.png</include>
-                    <include>**/image/card/*.png</include>
-                    <include>**/image/recovery/*.png</include>
                     <include>**/image/*.png</include>
                     <include>**/image/*.jpg</include>
                     <include>**/data/*.json</include>

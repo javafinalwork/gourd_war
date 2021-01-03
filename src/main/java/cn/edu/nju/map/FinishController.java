@@ -33,8 +33,9 @@ public class FinishController
 {
     private SceneSwitch ss;
     private Scene scene;
+    private String endText;
 
-    public FinishController(SceneSwitch ss)
+    public FinishController(SceneSwitch ss, boolean isCalabashWin, boolean isMonsterWin)
     {
         this.ss = ss;
         try
@@ -44,7 +45,25 @@ public class FinishController
         {
             e.printStackTrace();
         }
+        initEndText(isCalabashWin, isMonsterWin);
     }
+
+    private void initEndText(boolean isCalabashWin, boolean isMonsterWin)
+    {
+        if (isCalabashWin && isMonsterWin)
+        {
+            endText = "平局！";
+        }
+        else if (isCalabashWin)
+        {
+            endText = "葫芦娃胜利！";
+        }
+        else
+        {
+            endText = "妖精胜利！";
+        }
+    }
+
 
     public Scene getScene()
     {
@@ -55,8 +74,8 @@ public class FinishController
     public void start() throws Exception
     {
         AnchorPane stackPane = new AnchorPane();
-        stackPane.setOnKeyPressed(e->{
-            if(e.getCode()== KeyCode.L)
+        stackPane.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.L)
             {
                 ss.openRecordFile();
             }
@@ -117,8 +136,6 @@ public class FinishController
         exitBtn.setEffect(shadow);
 
 
-
-
         restartBtn.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
         {
             @Override
@@ -126,7 +143,7 @@ public class FinishController
             {
                 restartBtn.setEffect(shadow);
                 Path path = new Path();// 创建一个路径对象
-                double x = restartBtn.getLayoutX()-40;
+                double x = restartBtn.getLayoutX() - 40;
                 double y = restartBtn.getLayoutY();
                 path.getElements().add(new MoveTo(x, y + 18));// 从哪个位置开始动画，一般来说给组件的默认位置就行
                 path.getElements().add(new LineTo(x - 20, y + 18));// 添加一个向左移动的路径
@@ -179,7 +196,7 @@ public class FinishController
         });
 
 
-        playbackBtn.setOnMouseClicked(e->{
+        playbackBtn.setOnMouseClicked(e -> {
             ss.openRecordFile();
         });
 
@@ -225,25 +242,14 @@ public class FinishController
             }
         });
 
-        restartBtn.setOnMouseClicked(e->{
+        restartBtn.setOnMouseClicked(e -> {
             ss.changeToStartScene();
         });
-//        restartBtn.setOnAction(new EventHandler<ActionEvent>()
-//        {
-//            @Override
-//            public void handle(ActionEvent event)
-//            {
-//                System.out.println("RESATART GAME");
-//
-////                Sing();
-//            }
-//        });
 
-        Text text=new Text();
-        text.setText("这样可以吗？");
-        text.setFont(Font.font ("Microsoft YaHei",  FontWeight.BOLD,70));
+        Text text = new Text();
+        text.setText(endText);
+        text.setFont(Font.font("Microsoft YaHei", FontWeight.BOLD, 70));
         text.setFill(Color.BLACK);
-        //label.setPrefSize(32,164);
 
         hbBtn.setAlignment(Pos.CENTER);
         hbBtn.getChildren().addAll(restartBtn);
@@ -254,7 +260,7 @@ public class FinishController
 
         grid.setOpacity(1);
         grid.add(imageView, 1, 1);
-        grid.add(text,1,5);
+        grid.add(text, 1, 5);
         grid.add(hbBtn, 1, 10);
         grid.add(hBox, 1, 8);
         grid.add(hBoxExit, 1, 12);
@@ -316,16 +322,4 @@ public class FinishController
         scene.setCursor(Cursor.CLOSED_HAND);
         scene.getStylesheets().add(getClass().getResource("/css/finish.css").toExternalForm());
     }
-
-
-//    void Sing()
-//    {
-//        Media media;
-//        MediaPlayer mediaPlayer;
-//
-//
-//        mediaPlayer = new MediaPlayer(media = new Media(""););
-//        mediaPlayer.play();
-//        System.out.println("we are playing");
-//    }
 }
