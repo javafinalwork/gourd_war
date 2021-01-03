@@ -75,7 +75,7 @@
     {
       "name": "蝎子精",
       "gridId": 13,
-      "hitPoint": 30,
+      "hitPoint": 300,
       "attack": 20,
       "speed": 10,
       "range": 1,
@@ -85,7 +85,7 @@
     {
       "name": "蛇精",
       "gridId": 6,
-      "hitPoint": 30,
+      "hitPoint": 150,
       "attack": 30,
       "speed": 3,
       "range": 3,
@@ -94,7 +94,7 @@
     },
     {
       "name": "蜈蚣精",
-      "gridId": 20,
+      "gridId": 100,
       "hitPoint": 10,
       "attack": 10,
       "speed": 10,
