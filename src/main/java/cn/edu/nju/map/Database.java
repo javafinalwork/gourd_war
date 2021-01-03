@@ -9,7 +9,7 @@ public class Database {
         String dbname="homework_1";
         String dbuser="root";
         String dbpassword="njbk";
-        String url="jdbc:mysql://localhost:3306/"+dbname+"?useUnicode=true&characterEncoding=utf8";;
+        String url="jdbc:mysql://localhost:3306/"+dbname+"?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("连接中......");
