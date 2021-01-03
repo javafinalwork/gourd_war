@@ -46,6 +46,7 @@ public class TestReadData
         ArrayList<String> monsterNameList = new ArrayList<>();
         monsterNameList.add("蝎子精");
         monsterNameList.add("蛇精");
+        monsterNameList.add("蜈蚣精");
         i = 0;
         for (Object obj : jsonObject.getJSONArray("monster"))
         {
@@ -54,7 +55,4 @@ public class TestReadData
             i += 1;
         }
     }
-
-
-
 }

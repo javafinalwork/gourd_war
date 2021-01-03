@@ -31,11 +31,8 @@ public class ClientWaitingController
     void completeInput(ActionEvent event)
     {
         Effect effect = new DropShadow();
-//        Effect effect1 = new Lighting();
         confirmBtn.setEffect(effect);
-//        confirmBtn.setEffect(effect1);
         ss.connectToServer(ipAddressText.getText());
-        System.out.println(ipAddressText.getText());
     }
 
 }

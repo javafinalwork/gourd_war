@@ -35,8 +35,8 @@ public class Creature
 
 
     public Creature(String name, int gridId, Direction direction,
-             int hitPoint, int attack, int speed, int attackRange,
-             BulletType bulletType, String imgUri, boolean isGood)
+                    int hitPoint, int attack, int speed, int attackRange,
+                    BulletType bulletType, String imgUri, boolean isGood)
     {
         this.name = name;
         this.gridId = gridId;
@@ -117,6 +117,10 @@ public class Creature
             this.hitPoint = 0;
             changeDeadImg();
         }
+        else if (this.hitPoint >= this.totalHp)
+        {
+            this.hitPoint = this.totalHp;
+        }
         double ratio = (double) this.hitPoint / this.totalHp;
         this.rLife.setWidth(ratio * LIFE_REC_WIDTH);
     }
@@ -131,8 +135,8 @@ public class Creature
         {
             this.imgView.setImage(Constant.MONSTER_DEAD);
         }
-        this.imgView.setX(imgView.getX()+30);
-        this.imgView.setY(imgView.getY()+30);
+        this.imgView.setX(imgView.getX() + 30);
+        this.imgView.setY(imgView.getY() + 30);
         rLife.setVisible(false);
         rBorder.setVisible(false);
     }
@@ -221,4 +225,5 @@ public class Creature
         }
         return false;
     }
+
 }

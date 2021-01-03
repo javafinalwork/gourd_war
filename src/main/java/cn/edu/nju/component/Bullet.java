@@ -10,7 +10,7 @@ public class Bullet
     private int clock = 1;
     private int speed = 0;
     private ImageView imgView;
-    private final boolean isServer;
+    private final boolean isGood;
     private final int damage;
     private final Direction direction;
     private final BulletType bulletType;
@@ -31,10 +31,10 @@ public class Bullet
     }
 
 
-    public Bullet(BulletType bulletType, Direction direction, boolean isServer,
-           int damage, double x, double y, double animationX, double animationY, double range)
+    public Bullet(BulletType bulletType, Direction direction, boolean isGood,
+                  int damage, double x, double y, double animationX, double animationY, double range)
     {
-        this.isServer = isServer;
+        this.isGood = isGood;
         this.damage = damage;
         this.direction = direction;
         this.bulletType = bulletType;
@@ -95,6 +95,23 @@ public class Bullet
             this.clock = 10;
             this.speed = 3;
             this.frameList = Constant.SOIL_FRAME_LIST;
+            this.totalFrame = this.frameList.length;
+            this.imgView = new ImageView(this.frameList[0]);
+        }
+        else if (bulletType == BulletType.RECOVERY)
+        {
+            this.clock = 10;
+            this.speed = 3;
+            this.frameList = Constant.RECOVERY_FRAME_LIST;
+//            this.frameList = Constant.SOIL_FRAME_LIST;
+            this.totalFrame = this.frameList.length;
+            this.imgView = new ImageView(this.frameList[0]);
+        }
+        else if(bulletType==BulletType.DARK_POWER)
+        {
+            this.clock = 10;
+            this.speed = 3;
+            this.frameList = Constant.DARK_POWER_LIST;
             this.totalFrame = this.frameList.length;
             this.imgView = new ImageView(this.frameList[0]);
         }
@@ -230,7 +247,7 @@ public class Bullet
 
     public boolean isFromServer()
     {
-        return isServer;
+        return isGood;
     }
 
     public double getX()

@@ -230,8 +230,8 @@ public class SceneSwitch
         initServerWaitingScene();
         stage.setScene(serverWaitingScene);
         battle = new Battle(this, true, "", mapId);
-//        battle.startConnection();
-        finishConnect(mapId);
+        battle.startConnection();
+//        finishConnect(mapId);
     }
 
 

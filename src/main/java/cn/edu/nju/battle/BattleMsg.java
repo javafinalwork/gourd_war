@@ -218,4 +218,3 @@ class MapMsg extends BattleMsg
     }
 
 }
-

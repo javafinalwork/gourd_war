@@ -53,7 +53,15 @@ public class Battlefield
         {
             return new GridMap(67, 178, 164, 91, Constant.GRAY_GRID1);
         }
-        return new GridMap(245, 175, 115, 85, Constant.GRAY_GRID0);
+        else if(mapId==2)
+        {
+            return new GridMap(77, 216, 162, 82, Constant.GRAY_GRID2);
+        }
+        else
+        {
+            System.out.println("wrong map id!");
+            return new GridMap(245, 175, 115, 85, Constant.GRAY_GRID0);
+        }
     }
 
     public void parseMsgOnPlayBack(BattleMsg msg)
@@ -383,21 +391,6 @@ public class Battlefield
                         BattleMsg msg = new DamageMsg(cre.getName(), bullet.getDamage(), isServer, clock);
                         msgList.add(msg);
                     }
-                }
-            }
-        }
-    }
-
-    public void activatePower(BulletType bulletType, long clock)
-    {
-        if (bulletType == BulletType.DARK_POWER)
-        {
-            for (Creature cre : calabashBrothers)
-            {
-                if (cre != null && !cre.isDied())
-                {
-                    BattleMsg bullet = new BulletMsg(cre.getGridId(), cre.getGridId(), isServer, clock);
-                    parseMsg(bullet);
                 }
             }
         }

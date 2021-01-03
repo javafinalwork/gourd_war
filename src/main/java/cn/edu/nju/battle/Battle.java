@@ -42,8 +42,6 @@ public class Battle
     {
         this.isServer = isServer;
         this.sceneSwitch = ss;
-        recorder = new Recorder();
-        recorder.writeToFile(new MapMsg(mapId, isServer, 0));
         if (isServer)
         {
             connector = new DataServer(ss, battlefield, mapId);
@@ -60,6 +58,8 @@ public class Battle
      */
     private void initBattle(int mapId)
     {
+        recorder = new Recorder();
+        recorder.writeToFile(new MapMsg(mapId, isServer, 0));
         pane.getChildren().add(new ImageView(Constant.BATTLE_IMAGES[mapId]));
         battleScene = new Scene(pane, Constant.WINDOW_WIDTH, Constant.WINDOW_HEIGHT);
         battlefield = new Battlefield(isServer, pane, this, recorder,  mapId);
@@ -82,7 +82,9 @@ public class Battle
             e.printStackTrace();
         }
         BulletType[] bulletTypes = {BulletType.NORMAL, BulletType.WATER, BulletType.FIRE,
-                BulletType.DARK, BulletType.FLASH, BulletType.SOIL};
+                BulletType.DARK, BulletType.FLASH, BulletType.SOIL, BulletType.RECOVERY,
+                BulletType.DARK_POWER
+        };
         JSONObject jsonObject = new JSONObject(content);
         for (Object obj : jsonObject.getJSONArray("calabash"))
         {
@@ -106,24 +108,9 @@ public class Battle
         }
     }
 
-    private void initCard()
-    {
-        double originX = 50;
-        double originY = 20;
-        for (int i = 0; i < 7; i++)
-        {
-            Constant.CARDS[i].relocate(originX + i * 120, originY);
-            pane.getChildren().add(Constant.CARDS[i]);
-        }
-        Constant.CARDS[0].setOnMouseClicked(e -> {
-
-        });
-    }
-
 
     public void start(int mapId)
     {
-//        initCard();
         initBattle(mapId);
         connector.setBattlefield(battlefield);
         catchClickOnPane();
@@ -173,7 +160,6 @@ public class Battle
         pane.setOnMouseClicked(e -> {
             double x = e.getSceneX();
             double y = e.getSceneY();
-            System.out.println("x: " + x + " y: " + y);
             BattleMsg msg = battlefield.moveCreatureEvent(x, y, clock);
             writeMsg(msg);
         });
@@ -256,7 +242,11 @@ public class Battle
 
         if (msgList.size() >= 1)
         {
-            initBattle(msgList.getFirst().getMapId());
+            int mapId=msgList.getFirst().getMapId();
+            pane.getChildren().add(new ImageView(Constant.BATTLE_IMAGES[mapId]));
+            battleScene = new Scene(pane, Constant.WINDOW_WIDTH, Constant.WINDOW_HEIGHT);
+            battlefield = new Battlefield(isServer, pane, this, recorder,  mapId);
+            initCreature();
             msgList.removeFirst();
         }
         else

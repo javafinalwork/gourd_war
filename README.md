@@ -86,9 +86,25 @@ DamageMsg(String name, int damage, boolean isServer, long clock)
 
 #### map模块
 
-...
+图形界面部分主要使用了JavaFX库，借助Scene Builder设计界面、结合CSS样式装饰控件，综合利用了JavaFX库中提供的各动画类、媒体类、图像处理相关类丰富界面。
 
-### 测试
+`StartController`为游戏开始界面，界面设计由`start.fxml`描述，其中控件样式由`start.css`描述，为控件添加了视觉特效等。`StartController`类中定义了各个按钮鼠标事件处理方法即切换到新的界面。
+
+`SignUpController`类绑定登录用户界面。界面设计由`login.fxml`描述，控件样式由`login.css`描述。`SignUpController`类中定义了各个控件事件，也为静态图像添加了鼠标事件处理方法。登录界面SERVER、CLIENT供用户选择是服务器端还是客户端也可以选择TOURIST即游客模式省略匹配用户信息过程。若不选择CLIENT按钮则将会根据用户身份以及输入的用户信息匹配数据库中的数据，匹配成功则开始游戏、否则会有相应提示信息。
+
+`SignUpController`类绑定用户注册界面，界面设计由`signup.fxml`描述。用户可以注册账号，新的账号的密码信息将会存入数据库中，用于登录时匹配。
+
+`ServerWaitingController`类定义了等待客户连接界面,主要利用了面板。
+
+`MapChange`类定义了地图选择界面。利用了`AnchorPane`、`HBox`布局类、`Button`控件、相机视野、以及动画效果。
+
+`FinishController`类定义了游戏结束界面。主要利用了并行动画、串行动画、路径动画。
+
+`Database`类主要用于加载驱动与连接数据库。需要在`getDbconnection`方法中配置数据库用户名和密码，在`LoginController`类的`isValidLogin`方法中检测用户输入的信息。
+
+#### 测试
+
+
 
 ...
 

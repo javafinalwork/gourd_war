@@ -1,20 +1,16 @@
 package cn.edu.nju.map;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Consumer;
 
 import cn.edu.nju.SceneSwitch;
 import javafx.animation.*;
-import javafx.geometry.Insets;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -23,10 +19,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+import javafx.scene.text.Text;
+
 
 public class FinishController
 {
@@ -93,21 +94,29 @@ public class FinishController
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
+        //grid.setHgap(10);
         grid.setVgap(20);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        //grid.setPadding(new Insets(25, 25, 25, 25));
         Button restartBtn = new Button("返回");
-        Button playbackBtn = new Button("回放游戏");
-        Button exitBtn = new Button("退出游戏");
+        restartBtn.setPrefWidth(164);
+        restartBtn.setPrefHeight(32);
+        Button playbackBtn = new Button(" 回放游戏 ");
+        playbackBtn.setPrefHeight(32);
+        playbackBtn.setPrefWidth(164);
+        Button exitBtn = new Button(" 退出游戏 ");
+        exitBtn.setPrefWidth(164);
+        exitBtn.setPrefHeight(32);
 
-        HBox hbBtn = new HBox(10);
-        HBox hBox = new HBox(10);
-        HBox hBoxExit = new HBox(10);
+        HBox hbBtn = new HBox();
+        HBox hBox = new HBox();
+        HBox hBoxExit = new HBox();
 
         DropShadow shadow = new DropShadow();
         playbackBtn.setEffect(shadow);
         restartBtn.setEffect(shadow);
         exitBtn.setEffect(shadow);
+
+
 
 
         restartBtn.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
@@ -117,7 +126,7 @@ public class FinishController
             {
                 restartBtn.setEffect(shadow);
                 Path path = new Path();// 创建一个路径对象
-                double x = restartBtn.getLayoutX() - 80;
+                double x = restartBtn.getLayoutX()-40;
                 double y = restartBtn.getLayoutY();
                 path.getElements().add(new MoveTo(x, y + 18));// 从哪个位置开始动画，一般来说给组件的默认位置就行
                 path.getElements().add(new LineTo(x - 20, y + 18));// 添加一个向左移动的路径
@@ -152,7 +161,7 @@ public class FinishController
             {
                 playbackBtn.setEffect(shadow);
                 Path path = new Path();// 创建一个路径对象
-                double x = playbackBtn.getLayoutX() - 80;
+                double x = playbackBtn.getLayoutX() - 40;
                 double y = playbackBtn.getLayoutY();
                 path.getElements().add(new MoveTo(x, y + 18));// 从哪个位置开始动画，一般来说给组件的默认位置就行
                 path.getElements().add(new LineTo(x - 20, y + 18));// 添加一个向左移动的路径
@@ -181,7 +190,7 @@ public class FinishController
             {
                 exitBtn.setEffect(shadow);
                 Path path = new Path();// 创建一个路径对象
-                double x = exitBtn.getLayoutX() - 80;
+                double x = exitBtn.getLayoutX() - 40;
                 double y = exitBtn.getLayoutY();
                 path.getElements().add(new MoveTo(x, y + 18));// 从哪个位置开始动画，一般来说给组件的默认位置就行
                 path.getElements().add(new LineTo(x - 20, y + 18));// 添加一个向左移动的路径
@@ -230,6 +239,11 @@ public class FinishController
 //            }
 //        });
 
+        Text text=new Text();
+        text.setText("这样可以吗？");
+        text.setFont(Font.font ("Microsoft YaHei",  FontWeight.BOLD,70));
+        text.setFill(Color.BLACK);
+        //label.setPrefSize(32,164);
 
         hbBtn.setAlignment(Pos.CENTER);
         hbBtn.getChildren().addAll(restartBtn);
@@ -239,10 +253,11 @@ public class FinishController
         hBoxExit.getChildren().addAll(exitBtn);
 
         grid.setOpacity(1);
-        grid.add(imageView, 1, 0);
-        grid.add(hbBtn, 1, 17);
-        grid.add(hBox, 1, 15);
-        grid.add(hBoxExit, 1, 19);
+        grid.add(imageView, 1, 1);
+        grid.add(text,1,5);
+        grid.add(hbBtn, 1, 10);
+        grid.add(hBox, 1, 8);
+        grid.add(hBoxExit, 1, 12);
 
         Random random = new Random();
         ArrayList<ImageView> imageList = new ArrayList<ImageView>();
@@ -295,7 +310,7 @@ public class FinishController
 
         stackPane.getChildren().addAll(grid);
 
-        AnchorPane.setTopAnchor(grid, 50.0);
+        AnchorPane.setTopAnchor(grid, 0.0);
         AnchorPane.setLeftAnchor(grid, 400.0);
         scene = new Scene(stackPane, 1280, 700);
         scene.setCursor(Cursor.CLOSED_HAND);

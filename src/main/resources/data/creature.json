@@ -79,7 +79,7 @@
       "attack": 10,
       "speed": 10,
       "range": 1,
-      "bullet": 0,
+      "bullet": 7,
       "imgUri": "/image/scorpion.png"
     },
     {
@@ -91,6 +91,16 @@
       "range": 3,
       "bullet": 3,
       "imgUri": "/image/snake.png"
+    },
+    {
+      "name": "蜈蚣精",
+      "gridId": 20,
+      "hitPoint": 50,
+      "attack": 10,
+      "speed": 10,
+      "range": 1,
+      "bullet": 0,
+      "imgUri": "/image/wugong.png"
     }
   ]
 }

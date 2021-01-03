@@ -16,15 +16,21 @@ public class Constant
     public final static Image PROJECT_ICON = new Image("/image/gourd_icon.png");
     public final static Image GRAY_GRID0 = new Image("/image/graygrid0.png");
     public final static Image GRAY_GRID1 = new Image("/image/graygrid1.png");
+    public final static Image GRAY_GRID2 = new Image("/image/graygrid2.png");
     public final static String NORMAL_BULLET_PREFIX = "/image/attack";
     public final static String FIRE_BULLET_PREFIX = "/image/fire";
     public final static String WATER_BULLET_PREFIX = "/image/water";
     public final static String FLASH_BULLET_PREFIX = "/image/flash";
+//    public final static String RECOVER_BULLET_PREFIX = "/image/recover";
     public final static Image DARK_BULLET = new Image("/image/dark.png");
     public final static Image CALABASH_DEAD = new Image("/image/tomb1.png");
     public final static Image MONSTER_DEAD = new Image("/image/tomb2.png");
     public final static ImageView[] CARDS = getCards();
-    public final static Image[] BATTLE_IMAGES = getBattleImg();
+    public final static Image[] BATTLE_IMAGES = {
+            new Image("/image/map_choose/battle.png"),
+            new Image("/image/map_choose/battle1.png"),
+            new Image("/image/map_choose/battle2.png")
+    };
 
     //animation
     public final static Image[] WATER_FRAME_LIST = getExplodeImageList(9,
@@ -37,7 +43,8 @@ public class Constant
             "/image/flash_explode/flash");
     public final static Image[] SOIL_FRAME_LIST = getExplodeImageList(8,
             "/image/soil_explode/soil");
-
+    public final static Image[] RECOVERY_FRAME_LIST = getExplodeImageList(5,
+            "/image/recovery/recover");
     public final static Image[] DARK_POWER_LIST = getExplodeImageList(6,
             "/image/dark_power/dark");
 
@@ -58,14 +65,6 @@ public class Constant
         cards[5] = new ImageView("/image/card/card_blue.png");
         cards[6] = new ImageView("/image/card/card_purple.png");
         return cards;
-    }
-
-    private static Image[] getBattleImg()
-    {
-        Image[] imgs = new Image[3];
-        imgs[0] = new Image("/image/map_choose/battle.png");
-        imgs[1] = new Image("/image/map_choose/battle1.png");
-        return imgs;
     }
 
 

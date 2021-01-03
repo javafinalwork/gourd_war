@@ -7,8 +7,6 @@ import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.Button;
@@ -22,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class MapChange
@@ -44,7 +41,7 @@ public class MapChange
     public MapChange(SceneSwitch ss)
     {
         this.ss = ss;
-        pane1 = getPane(1200, 700);
+        pane1 = getPane(1280, 700);
         dropShadow = new DropShadow();
         dropShadow.setColor(Color.valueOf("#00E5EE"));
         dropShadow.setHeight(50);
@@ -85,7 +82,7 @@ public class MapChange
 
         Image image1 = new Image("/image/map_choose/battle.png");
         Image image2 = new Image("/image/map_choose/battle1.png");
-        Image image3 = new Image("/image/map_choose/background.png");
+        Image image3 = new Image("/image/map_choose/battle2.png");
 
         ImageView im1 = new ImageView("/image/map_choose/battle.png");
         im1.setImage(image1);

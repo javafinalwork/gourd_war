@@ -26,9 +26,6 @@ public class StartController
     private Button replayButton;
 
     @FXML
-    private Button selectMapButton;
-
-    @FXML
     void exitAction(ActionEvent event)
     {
         ss.exitGame();
@@ -57,12 +54,6 @@ public class StartController
         ss.openRecordFile();
     }
 
-
-    @FXML
-    void selectMap(ActionEvent event)
-    {
-
-    }
 
     public void enter_l(KeyEvent event)
     {

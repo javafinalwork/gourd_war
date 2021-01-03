@@ -111,6 +111,7 @@
                     <include>**/image/finish/*.png</include>
                     <include>**/image/activation/*.png</include>
                     <include>**/image/card/*.png</include>
+                    <include>**/image/recovery/*.png</include>
                     <include>**/image/*.png</include>
                     <include>**/image/*.jpg</include>
                     <include>**/data/*.json</include>
